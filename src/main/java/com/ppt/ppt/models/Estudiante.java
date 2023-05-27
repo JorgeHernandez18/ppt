@@ -12,8 +12,8 @@ import lombok.Data;
 public class Estudiante {
 
     @Id
-    @Column(name = "id")
-    private int id_estudiante;
+    @Column(name = "codigo")
+    private int codigo;
 
     @Column(name = "nombre")
     private String nombre;
@@ -23,5 +23,5 @@ public class Estudiante {
 
     @Column(name = "correoElectronico")
     private String correoElectronico;
-    
+
 }
