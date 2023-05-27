@@ -8,17 +8,13 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "DocenteLider")
-public class DocenteLider {
+@Table(name = "Docente")
+public class Docente {
 
     @Id
     @Column(name = "codigo")
     private int codigo;
 
-    @Column(name = "eje_transversal")
-    private int eje_transversal;
-
-    @Column(name = "cedulaDL")
-    private String cedulaDL;
-
+    @Column(name = "cedulaD")
+    private String cedulaD;
 }
