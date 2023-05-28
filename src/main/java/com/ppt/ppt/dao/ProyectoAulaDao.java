@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface ProyectoAulaDao {
 
-    List<ProyectoAula> getProyectosAula();
+    List<ProyectoAula> getProyectoAula();
 
+    void deleteProyectoAula(int id);
 }

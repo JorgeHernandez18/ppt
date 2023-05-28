@@ -19,8 +19,14 @@ public class ProyectoAulaDaoImp implements ProyectoAulaDao {
 
     @Override
     @Transactional
-    public List<ProyectoAula> getProyectosAula() {
+    public List<ProyectoAula> getProyectoAula() {
         String query ="FROM ProyectoAula";
         return entityManager.createQuery(query).getResultList();
+    }
+
+    @Override
+    public void deleteProyectoAula(int id) {
+        ProyectoAula pa = entityManager.find(ProyectoAula.class, id);
+        entityManager.remove(pa);
     }
 }
