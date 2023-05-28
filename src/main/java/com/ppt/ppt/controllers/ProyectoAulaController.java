@@ -30,7 +30,6 @@ public class ProyectoAulaController {
     @RequestMapping(value = "api/proyectoaula/{id}", method = RequestMethod.DELETE)
     public void deleteProyectoAula(@PathVariable int id){
         proyectoAulaDao.deleteProyectoAula(id);
-
     }
 
 }
