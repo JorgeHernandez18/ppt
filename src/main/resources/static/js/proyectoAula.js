@@ -2,10 +2,10 @@
 $(document).ready(function() {
 
   cargarUsuarios();
-  $('#usuarios').DataTable();
+  $('#proyectoAula').DataTable();
 });
 
-async function cargarUsuarios(){
+async function cargarProyectoAula(){
 
   const request = await fetch('usuarios', {
     method: 'GET',
@@ -24,5 +24,5 @@ for(let usuario of usuarios){
     listadoHTML += usuarioHTML;
 }
 
-document.querySelector('#usuarios tbody').outerHTML = listadoHTML;
+document.querySelector('#proyectoAula tbody').outerHTML = listadoHTML;
 }
