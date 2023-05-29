@@ -27,7 +27,4 @@ public class Usuario {
     @Column(name = "correoElectronico")
     private String correoElectronico;
 
-    @Column(name = "rol_id")
-    private int rol_id;
-
 }
