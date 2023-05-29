@@ -8,5 +8,11 @@ public interface ProyectoAulaDao {
 
     List<ProyectoAula> getProyectoAula();
 
+    ProyectoAula getProyectoAula(int id);
+
     void deleteProyectoAula(int id);
+
+    void updateProyectoAula(ProyectoAula proyectoAula, int id);
+
+    void createProyectoAula(ProyectoAula proyectoAula);
 }

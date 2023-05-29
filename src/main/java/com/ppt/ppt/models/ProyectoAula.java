@@ -1,9 +1,6 @@
 package com.ppt.ppt.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -12,6 +9,7 @@ import lombok.Data;
 public class ProyectoAula {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
@@ -22,7 +20,7 @@ public class ProyectoAula {
     private int id_eje_transversal;
 
     @Column(name = "tipo_eje")
-    private String tipo_eje;
+    private int tipo_eje;
 
     @Column(name = "fecha_inicio")
     private String fecha_inicio;
@@ -32,9 +30,6 @@ public class ProyectoAula {
 
     @Column(name = "docente_lider")
     private int docente_lider;
-
-    @Column(name = "actividad_pa")
-    private int actividad_pa;
 
     @Column(name = "grado")
     private int grado;

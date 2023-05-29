@@ -3,14 +3,12 @@ package com.ppt.ppt.controllers;
 import com.ppt.ppt.dao.ProyectoAulaDao;
 import com.ppt.ppt.models.ProyectoAula;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequestMapping("/pa")
 public class ProyectoAulaController {
 
 
@@ -22,9 +20,7 @@ public class ProyectoAulaController {
 
     @RequestMapping(value = "api/proyectoaula/{id}")
     public ProyectoAula getProyectoAula(@PathVariable int id){
-        ProyectoAula pa = new ProyectoAula();
-
-        return pa;
+        return proyectoAulaDao.getProyectoAula(id);
     }
 
     @RequestMapping(value = "api/proyectoaula/{id}", method = RequestMethod.DELETE)
@@ -32,4 +28,13 @@ public class ProyectoAulaController {
         proyectoAulaDao.deleteProyectoAula(id);
     }
 
+    @RequestMapping(value = "api/proyectoaula/{id}", method = RequestMethod.PUT)
+    public void updateProyectoAula(@RequestBody ProyectoAula proyectoAula,@PathVariable int id){
+        proyectoAulaDao.updateProyectoAula(proyectoAula,id);
+    }
+
+    @RequestMapping(value = "api/proyectoaula", method = RequestMethod.POST)
+    public void createProyectoAula(@RequestBody ProyectoAula proyectoAula){
+        proyectoAulaDao.createProyectoAula(proyectoAula);
+    }
 }
