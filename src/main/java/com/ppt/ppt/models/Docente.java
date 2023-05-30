@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Docente")
-public class Docente {
+public class Docente extends Usuario{
 
     @Id
     @Column(name = "codigo")
@@ -17,4 +17,8 @@ public class Docente {
 
     @Column(name = "cedulaD")
     private String cedulaD;
+
+    public Docente(){
+        super();
+    }
 }

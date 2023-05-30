@@ -1,9 +1,7 @@
 package com.ppt.ppt.controllers;
 
 import com.ppt.ppt.dao.ActividadPADao;
-import com.ppt.ppt.dao.PlanTrabajoDao;
 import com.ppt.ppt.models.ActividadPA;
-import com.ppt.ppt.models.PlanTrabajo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

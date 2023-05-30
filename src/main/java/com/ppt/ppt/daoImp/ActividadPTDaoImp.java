@@ -1,8 +1,6 @@
 package com.ppt.ppt.daoImp;
 
-import com.ppt.ppt.dao.ActividadPADao;
 import com.ppt.ppt.dao.ActividadPTDao;
-import com.ppt.ppt.models.ActividadPA;
 import com.ppt.ppt.models.ActividadPT;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
