@@ -8,11 +8,10 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "DocenteLider")
+@Table(name = "docente_lider")
 public class DocenteLider extends Usuario{
 
-    @Id
-    @Column(name = "codigo")
+    @Column(name = "codigo", unique = true)
     private int codigo;
 
     @Column(name = "eje_transversal")
