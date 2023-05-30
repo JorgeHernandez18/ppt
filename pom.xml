@@ -11,7 +11,7 @@
 	<groupId>com.ppt</groupId>
 	<artifactId>ppt</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<name>PPT</name>
 	<description>Software de proyectos pedagógicos transversales</description>
 	<properties>
