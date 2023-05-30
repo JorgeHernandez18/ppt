@@ -2,6 +2,7 @@ package com.ppt.ppt.controllers;
 
 import com.ppt.ppt.dao.PlanTrabajoDao;
 import com.ppt.ppt.models.PlanTrabajo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @RequestMapping("/pt")
 public class PlanTrabajoController {
 
+    @Autowired
     private PlanTrabajoDao planTrabajoDao;
 
     @RequestMapping(value = "api/plantrabajo")

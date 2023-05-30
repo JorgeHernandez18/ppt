@@ -5,6 +5,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Data
 @Entity
@@ -19,10 +22,12 @@ public class ActividadPA {
     private String nombre;
 
     @Column(name = "fecha_inicio")
-    private String fecha_inicio;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecha_inicio;
 
     @Column(name = "fecha_fin")
-    private String fecha_fin;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecha_fin;
 
     @Column(name = "estudiante")
     private int estudiante;

@@ -32,4 +32,7 @@ public class ActividadPT {
 
     @Column(name = "observacion")
     private String observacion;
+
+    @Column(name = "proyecto_aula")
+    private int proyecto_aula;
 }
