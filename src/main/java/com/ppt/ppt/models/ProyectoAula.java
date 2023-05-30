@@ -2,6 +2,9 @@ package com.ppt.ppt.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Data
 @Entity
@@ -23,10 +26,12 @@ public class ProyectoAula {
     private int tipo_eje;
 
     @Column(name = "fecha_inicio")
-    private String fecha_inicio;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecha_inicio;
 
     @Column(name = "fecha_fin")
-    private String fecha_fin;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date fecha_fin;
 
     @Column(name = "docente_lider")
     private int docente_lider;
