@@ -1,6 +1,7 @@
-package com.ppt.ppt.dao;
+package com.ppt.ppt.daoImp;
 
 
+import com.ppt.ppt.dao.ProyectoAulaDao;
 import com.ppt.ppt.models.ProyectoAula;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

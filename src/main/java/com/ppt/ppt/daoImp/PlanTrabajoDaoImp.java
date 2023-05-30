@@ -1,12 +1,13 @@
-package com.ppt.ppt.dao;
+package com.ppt.ppt.daoImp;
 
+import com.ppt.ppt.dao.PlanTrabajoDao;
 import com.ppt.ppt.models.PlanTrabajo;
 import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-public class PlanTrabajoDaoImp implements PlanTrabajoDao{
+public class PlanTrabajoDaoImp implements PlanTrabajoDao {
 
     @Autowired
     EntityManager entityManager;
