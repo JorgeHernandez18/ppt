@@ -27,4 +27,7 @@ public class Usuario {
     @Column(name = "correoElectronico")
     private String correoElectronico;
 
+    @Column(name = "password")
+    private String password;
+
 }
