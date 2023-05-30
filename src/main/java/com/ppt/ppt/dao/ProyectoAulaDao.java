@@ -5,7 +5,6 @@ import com.ppt.ppt.models.ProyectoAula;
 import java.util.List;
 
 public interface ProyectoAulaDao {
-
     List<ProyectoAula> getProyectoAula();
 
     ProyectoAula getProyectoAula(int id);
