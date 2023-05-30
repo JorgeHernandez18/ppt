@@ -4,15 +4,20 @@ import com.ppt.ppt.dao.PlanTrabajoDao;
 import com.ppt.ppt.models.PlanTrabajo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Repository
+@Transactional
 public class PlanTrabajoDaoImp implements PlanTrabajoDao {
 
     @PersistenceContext
     private EntityManager entityManager;
 
     @Override
+    @Transactional
     public List<PlanTrabajo> getPlanTrabajo() {
         String query ="FROM PlanTrabajo";
         return entityManager.createQuery(query).getResultList();

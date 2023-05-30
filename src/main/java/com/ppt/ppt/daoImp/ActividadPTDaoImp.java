@@ -4,9 +4,13 @@ import com.ppt.ppt.dao.ActividadPTDao;
 import com.ppt.ppt.models.ActividadPT;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Repository
+@Transactional
 public class ActividadPTDaoImp implements ActividadPTDao {
 
     @PersistenceContext
@@ -14,6 +18,7 @@ public class ActividadPTDaoImp implements ActividadPTDao {
 
 
     @Override
+    @Transactional
     public List<ActividadPT> getActividadPT() {
         String query ="FROM ActividadPT";
         return entityManager.createQuery(query).getResultList();
