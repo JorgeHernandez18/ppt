@@ -30,6 +30,7 @@ public class Usuario {
     @Column(name = "correo_electronico")
     private String correo_electronico;
 
+    @Column(name = "enabled")
     private boolean enabled = true;
 
     @Column(name = "password")
