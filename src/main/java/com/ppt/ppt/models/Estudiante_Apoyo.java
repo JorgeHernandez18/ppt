@@ -13,9 +13,9 @@ public class Estudiante_Apoyo {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "id_estudiante")
-    private int id_estudiante;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Estudiante id_estudiante;
 
-    @Column(name = "id_actividadPA")
-    private int id_actividadPA;
+    @ManyToOne
+    private ActividadPA id_actividadPA;
 }

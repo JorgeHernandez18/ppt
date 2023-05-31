@@ -5,6 +5,8 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -38,4 +40,7 @@ public class ActividadPA {
 
     @Column(name = "proyecto_aula")
     private int proyecto_aula;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "id_actividadPA")
+    private Set<Estudiante_Apoyo> ea = new HashSet<>();
 }

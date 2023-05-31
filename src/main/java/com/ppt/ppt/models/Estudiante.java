@@ -1,10 +1,10 @@
 package com.ppt.ppt.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -23,5 +23,8 @@ public class Estudiante {
 
     @Column(name = "correoElectronico")
     private String correoElectronico;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "id_estudiante")
+    private Set<Estudiante_Apoyo> ea = new HashSet<>();
 
 }
