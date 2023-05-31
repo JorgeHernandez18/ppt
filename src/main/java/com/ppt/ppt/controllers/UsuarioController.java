@@ -1,11 +1,14 @@
 package com.ppt.ppt.controllers;
 
 import com.ppt.ppt.dao.UsuarioDao;
-import com.ppt.ppt.models.Usuario;
+import com.ppt.ppt.models.*;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/usuario")
@@ -24,8 +27,23 @@ public class UsuarioController {
     //Metodo usado para registrar un usuario
     @RequestMapping(value = "api/usuario", method = RequestMethod.POST)
     public void createUsuario(@RequestBody Usuario usuario){
+        Set<UsuarioRol> ur = new HashSet<>();
+
+        Rol rol = new Rol();
+        rol.setId(1);
+        rol.setNombre("DocenteLider");
+
+
+        UsuarioRol usuarioRol = new UsuarioRol();
+        usuarioRol.setRol(rol);
+        usuarioRol.setUsuario(usuario);
+
+        ur.add(usuarioRol);
+
         convertirPassword(usuario);
-        usuarioDao.createUsuario(usuario);
+        usuarioDao.createUsuario(usuario, ur);
+
+
     }
 
     @RequestMapping(value = "api/usuario/{id}", method = RequestMethod.PUT)

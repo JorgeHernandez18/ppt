@@ -2,6 +2,7 @@ package com.ppt.ppt.daoImp;
 
 import com.ppt.ppt.dao.UsuarioDao;
 import com.ppt.ppt.models.Usuario;
+import com.ppt.ppt.models.UsuarioRol;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import jakarta.persistence.EntityManager;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -25,7 +27,12 @@ public class UsuarioDaoImp implements UsuarioDao {
     }
 
     @Override
-    public void createUsuario(Usuario usuario) {
+    public void createUsuario(Usuario usuario, Set<UsuarioRol> ur) {
+        for(UsuarioRol usuarioRol: ur){
+            entityManager.merge(usuarioRol.getRol());
+        }
+        usuario.getUsuarioRoles().addAll(ur);
+
         entityManager.merge(usuario);
     }
 

@@ -1,10 +1,12 @@
 package com.ppt.ppt.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -12,8 +14,8 @@ import lombok.Data;
 public class Usuario {
 
     @Id
-    @Column(name = "cedula")
-    private String cedula;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     @Column(name = "nombre")
     private String nombre;
@@ -27,7 +29,14 @@ public class Usuario {
     @Column(name = "correo_electronico")
     private String correo_electronico;
 
+    private boolean enabled = true;
+
     @Column(name = "password")
     private String password;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
+    private Set<UsuarioRol> usuarioRoles = new HashSet<>();
 
 }
