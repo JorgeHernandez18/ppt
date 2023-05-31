@@ -22,7 +22,7 @@ public class AuthController {
     public String login(@RequestBody Usuario usuario){
         Usuario usuarioLog = usuarioDao.obtenerUsuarioPorCredenciales(usuario);
         if(usuarioLog != null) {
-            return jwtUtil.create(usuarioLog.getCedula(), usuarioLog.getCorreoElectronico());
+            return jwtUtil.create(usuarioLog.getCedula(), usuarioLog.getCorreo_electronico());
         }
         return "No logueado";
     }

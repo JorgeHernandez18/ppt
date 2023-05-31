@@ -9,9 +9,10 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "docente_lider")
-public class DocenteLider extends Usuario{
+public class DocenteLider{
 
-    @Column(name = "codigo", unique = true)
+    @Id
+    @Column(name = "codigo")
     private int codigo;
 
     @Column(name = "eje_transversal")
@@ -19,9 +20,5 @@ public class DocenteLider extends Usuario{
 
     @Column(name = "cedulaDL")
     private String cedulaDL;
-
-    public DocenteLider(){
-        super();
-    }
 
 }

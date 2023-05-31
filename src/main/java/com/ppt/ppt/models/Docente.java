@@ -9,15 +9,13 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "docente")
-public class Docente extends Usuario{
+public class Docente {
 
-    @Column(name = "codigo", unique = true)
+    @Id
+    @Column(name = "codigo")
     private int codigo;
 
     @Column(name = "cedulaD")
     private String cedulaD;
 
-    public Docente(){
-        super();
-    }
 }

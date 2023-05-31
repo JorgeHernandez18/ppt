@@ -24,15 +24,20 @@ public class UsuarioController {
     //Metodo usado para registrar un usuario
     @RequestMapping(value = "api/usuario", method = RequestMethod.POST)
     public void createUsuario(@RequestBody Usuario usuario){
-        Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
-        String hash = argon2.hash(1, 1024, 1, usuario.getPassword());
-        usuario.setPassword(hash);
+        convertirPassword(usuario);
         usuarioDao.createUsuario(usuario);
     }
 
     @RequestMapping(value = "api/usuario/{id}", method = RequestMethod.PUT)
     public void updateUsuario(@RequestBody Usuario usuario, @PathVariable String id){
+        convertirPassword(usuario);
         usuarioDao.updateUsuario(usuario, id);
+    }
+
+    private void convertirPassword(Usuario usuario){
+        Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+        String hash = argon2.hash(1, 1024, 1, usuario.getPassword().toCharArray());
+        usuario.setPassword(hash);
     }
 
 }

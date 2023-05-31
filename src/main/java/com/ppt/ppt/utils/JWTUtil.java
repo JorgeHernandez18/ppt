@@ -1,5 +1,6 @@
 package com.ppt.ppt.utils;
 
+import io.jsonwebtoken.security.Keys;
 import jakarta.xml.bind.DatatypeConverter;
 import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
@@ -45,11 +46,15 @@ public class JWTUtil {
 
         //  sign JWT with our ApiKey secret
         byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(key);
-        Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
+        Key signingKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);;
 
         //  set the JWT Claims
-        JwtBuilder builder = Jwts.builder().setId(id).setIssuedAt(now).setSubject(subject).setIssuer(issuer)
-                .signWith(signatureAlgorithm, signingKey);
+        JwtBuilder builder = Jwts.builder()
+                .setId(id)
+                .setIssuedAt(now)
+                .setSubject(subject)
+                .setIssuer(issuer)
+                .signWith(signingKey);
 
         if (ttlMillis >= 0) {
             long expMillis = nowMillis + ttlMillis;
