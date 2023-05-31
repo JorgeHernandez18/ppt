@@ -8,7 +8,7 @@ COPY src/ ./src/
 
 RUN mvn package
 
-FROM openjdk:17-alpine
+FROM openjdk:17-oraclelinux8
 
 WORKDIR /app
 
