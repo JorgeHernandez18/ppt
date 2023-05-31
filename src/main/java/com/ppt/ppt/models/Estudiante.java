@@ -2,6 +2,8 @@ package com.ppt.ppt.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,10 +23,12 @@ public class Estudiante {
     @Column(name = "apellido")
     private String apellido;
 
-    @Column(name = "correoElectronico")
-    private String correoElectronico;
+    @Column(name = "correo_electronico")
+    private String correo_electronico;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "id_estudiante")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "estudiante")
     private Set<Estudiante_Apoyo> ea = new HashSet<>();
 
 }

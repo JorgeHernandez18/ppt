@@ -2,9 +2,8 @@ package com.ppt.ppt.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.util.Date;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -22,15 +21,10 @@ public class ActividadPA {
     private String nombre;
 
     @Column(name = "fecha_inicio")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date fecha_inicio;
+    private String fecha_inicio;
 
     @Column(name = "fecha_fin")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date fecha_fin;
-
-    @Column(name = "estudiante")
-    private int estudiante;
+    private String fecha_fin;
 
     @Column(name = "cumplimiento")
     private byte cumplimiento;
@@ -41,6 +35,8 @@ public class ActividadPA {
     @Column(name = "proyecto_aula")
     private int proyecto_aula;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "id_actividadPA")
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividadPA")
     private Set<Estudiante_Apoyo> ea = new HashSet<>();
 }

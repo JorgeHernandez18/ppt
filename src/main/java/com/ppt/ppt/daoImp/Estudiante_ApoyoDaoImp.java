@@ -28,4 +28,5 @@ public class Estudiante_ApoyoDaoImp implements Estudiante_ApoyoDao {
         String query = "FROM Estudiante_Apoyo";
         entityManager.createQuery(query).getResultList();
     }
+
 }

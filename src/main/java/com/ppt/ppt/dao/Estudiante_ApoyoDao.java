@@ -10,4 +10,7 @@ public interface Estudiante_ApoyoDao {
     List<Estudiante_Apoyo> getEstudiante_Apoyo();
     void seleccionarEstudianteApoyo(List<Estudiante> e);
 
+
+
+
 }

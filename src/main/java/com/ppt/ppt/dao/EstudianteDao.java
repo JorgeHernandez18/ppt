@@ -8,4 +8,8 @@ import java.util.List;
 public interface EstudianteDao {
 
     List<Estudiante> getEstudiante();
+
+    void createEstudiante(Estudiante estudiante);
+
+
 }

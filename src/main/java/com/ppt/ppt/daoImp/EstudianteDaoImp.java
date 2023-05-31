@@ -22,4 +22,9 @@ public class EstudianteDaoImp implements EstudianteDao {
         String query = "FROM Estudiante";
         return entityManager.createQuery(query).getResultList();
     }
+
+    @Override
+    public void createEstudiante(Estudiante estudiante) {
+        entityManager.merge(estudiante);
+    }
 }
