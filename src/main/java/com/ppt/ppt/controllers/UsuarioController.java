@@ -25,17 +25,16 @@ public class UsuarioController {
     }
 
     //Metodo usado para registrar un usuario
-    @RequestMapping(value = "api/usuario", method = RequestMethod.POST)
-    public void createUsuario(@RequestBody Usuario usuario){
+    @RequestMapping(value = "api/usuario/{rol}", method = RequestMethod.POST)
+    public void createUsuario(@RequestBody Usuario usuario,@PathVariable int rol){
         Set<UsuarioRol> ur = new HashSet<>();
 
-        Rol rol = new Rol();
-        rol.setId(1);
-        rol.setNombre("DocenteLider");
+        Rol rolAux = new Rol();
+        rolAux.setId(rol);
 
 
         UsuarioRol usuarioRol = new UsuarioRol();
-        usuarioRol.setRol(rol);
+        usuarioRol.setRol(rolAux);
         usuarioRol.setUsuario(usuario);
 
         ur.add(usuarioRol);
