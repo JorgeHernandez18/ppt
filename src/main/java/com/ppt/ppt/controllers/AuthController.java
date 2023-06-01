@@ -17,7 +17,8 @@ public class AuthController {
 
     @Autowired
     private JWTUtil jwtUtil;
-    
+
+    //Funcionando correctamente
     @RequestMapping(value = "api/login", method = RequestMethod.POST)
     public String login(@RequestBody Usuario usuario) throws Exception{
         Usuario usuarioLog = usuarioDao.obtenerUsuarioPorCredenciales(usuario);

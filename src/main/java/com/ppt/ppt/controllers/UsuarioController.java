@@ -20,6 +20,7 @@ public class UsuarioController {
     @Autowired
     private UsuarioDao usuarioDao;
 
+    //Testeado y funcionando correctamente
     @RequestMapping(value = "api/usuario/{correo}")
     public Usuario getUsuario(@PathVariable String correo) throws Exception {
         return usuarioDao.getUsuario(correo);
@@ -50,19 +51,21 @@ public class UsuarioController {
         }
     }
 
+    //Funcionando correctamente
     @RequestMapping(value = "api/usuario/{id}", method = RequestMethod.PUT)
     public void updateUsuario(@RequestBody Usuario usuario, @PathVariable String id){
         convertirPassword(usuario);
         usuarioDao.updateUsuario(usuario, id);
     }
 
+    //Funcionando correctamente
     @RequestMapping(value = "api/docentes_apoyo")
     public List<Usuario> docentesApoyo(){ return usuarioDao.docentesApoyo();}
 
+    //Funcionando correctamente
     private void convertirPassword(Usuario usuario){
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
         String hash = argon2.hash(1, 1024, 1, usuario.getPassword().toCharArray());
         usuario.setPassword(hash);
     }
-
 }

@@ -18,24 +18,29 @@ public class ActividadPAController {
     @Autowired
     private ActividadPADao actividadPADao;
 
+    //Funciona correctamente
     @RequestMapping(value = "api/actividadpa")
     public List<ActividadPA> getActividadPA(){ return actividadPADao.getActividadPA();}
 
+    //Funciona correctamente, sin validación de id
     @RequestMapping(value = "api/actividadpa/{id}")
     public ActividadPA getActividadPA(@PathVariable int id){
         return actividadPADao.getActividadPA(id);
     }
 
+    //Funciona, aplicar excepcion para id no existente
     @RequestMapping(value = "api/actividadpa/{id}", method = RequestMethod.DELETE)
     public void deleteActividadPA(@PathVariable int id){
         actividadPADao.deleteActividadPA(id);
     }
 
+    //Funciona, aplicar excepcion para id no existente
     @RequestMapping(value = "api/actividadpa/{id}", method = RequestMethod.PUT)
     public void updateActividadPA(@RequestBody ActividadPA actividadPA, @PathVariable int id){
         actividadPADao.updateActividadPA(actividadPA,id);
     }
 
+    //No crea la actividad.
     @RequestMapping(value = "api/actividadpa", method = RequestMethod.POST)
     public void createActividadPA(@RequestBody ActividadPA actividadPA, @PathVariable int codigo) {
         Set<Estudiante_Apoyo> ea = new HashSet<>();

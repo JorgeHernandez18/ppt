@@ -1,5 +1,6 @@
 package com.ppt.ppt.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -35,6 +36,7 @@ public class ActividadPA {
     @Column(name = "proyecto_aula")
     private int proyecto_aula;
 
+    @JsonIgnore
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "actividadPA")

@@ -32,8 +32,9 @@ public class PlanTrabajoController {
         planTrabajoDao.updatePlanTrabajo(planTrabajo,id);
     }
 
-    @RequestMapping(value = "api/proyectoaula", method = RequestMethod.POST)
-    public void createProyectoAula(@RequestBody PlanTrabajo planTrabajo){
+    //Funcionando correctamente
+    @RequestMapping(value = "api/plantrabajo", method = RequestMethod.POST)
+    public void createPlanTrabajo(@RequestBody PlanTrabajo planTrabajo){
         planTrabajoDao.createPlanTrabajo(planTrabajo);
     }
 
