@@ -9,7 +9,7 @@ public interface EstudianteDao {
 
     List<Estudiante> getEstudiante();
 
-    Estudiante getEstudiante(String correo);
+    Estudiante getEstudiante(String correo) throws Exception;
 
     void createEstudiante(Estudiante estudiante);
 

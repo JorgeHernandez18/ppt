@@ -14,9 +14,11 @@ public class PlanTrabajoController {
     @Autowired
     private PlanTrabajoDao planTrabajoDao;
 
+    //Funciona correctamente
     @RequestMapping(value = "api/plantrabajo")
     public List<PlanTrabajo> getPlanTrabajo(){ return planTrabajoDao.getPlanTrabajo();}
 
+    //Funciona correctamente, sin control de id
     @RequestMapping(value = "api/plantrabajo/{id}")
     public PlanTrabajo getPlanTrabajo(@PathVariable int id){
         return planTrabajoDao.getPlanTrabajo(id);
@@ -27,6 +29,7 @@ public class PlanTrabajoController {
         planTrabajoDao.deletePlanTrabajo(id);
     }
 
+    //Funciona correctamente, sin control de id
     @RequestMapping(value = "api/plantrabajo/{id}", method = RequestMethod.PUT)
     public void updatePlanTrabajo(@RequestBody PlanTrabajo planTrabajo, @PathVariable int id){
         planTrabajoDao.updatePlanTrabajo(planTrabajo,id);

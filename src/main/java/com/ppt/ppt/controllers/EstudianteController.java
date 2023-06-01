@@ -17,16 +17,18 @@ public class EstudianteController {
     @Autowired
     private EstudianteDao estudianteDao;
 
+    //Funcionando correctamente
     @RequestMapping(value = "api/estudiante")
     public List<Estudiante> getEstudiante(){ return estudianteDao.getEstudiante();}
 
+    //Funcionando correctamente
     @RequestMapping(value = "api/estudiante", method = RequestMethod.POST)
-    public void createEstudiante(@RequestBody Estudiante estudiante) throws Exception{
-
+    public void createEstudiante(@RequestBody Estudiante estudiante) throws Exception {
         Estudiante e = estudianteDao.getEstudiante(estudiante.getCorreo_electronico());
-        if(e != null) {
+        if (e != null) {
             throw new Exception("Email de Estudiante ya existe");
+        }else {
+            estudianteDao.createEstudiante(estudiante);
         }
-        estudianteDao.createEstudiante(estudiante);
     }
 }

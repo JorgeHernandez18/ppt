@@ -3,6 +3,7 @@ package com.ppt.ppt.daoImp;
 import com.ppt.ppt.dao.EstudianteDao;
 import com.ppt.ppt.models.Estudiante;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,9 +25,16 @@ public class EstudianteDaoImp implements EstudianteDao {
     }
 
     @Override
-    public Estudiante getEstudiante(String correo) {
-        String query = "FROM Estudiante WHERE correo_electronico = :correo";
-        return (Estudiante) entityManager.createQuery(query).getSingleResult();
+    public Estudiante getEstudiante(String correo) throws Exception {
+        try {
+            String query = "FROM Estudiante WHERE correo_electronico = :correo";
+            Estudiante e = (Estudiante) entityManager.createQuery(query)
+                    .setParameter("correo", correo)
+                    .getSingleResult();
+            return e;
+        }catch (NoResultException e){
+         return null;
+        }
     }
 
     @Override
