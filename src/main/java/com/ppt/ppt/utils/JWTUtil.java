@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
 /**
@@ -47,8 +47,9 @@ public class JWTUtil {
         Date now = new Date(nowMillis);
 
         //  sign JWT with our ApiKey secret
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(key);
+        byte[] apiKeySecretBytes = Base64.getDecoder().decode(key);
         Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
+
 
         //  set the JWT Claims
         JwtBuilder builder = Jwts.builder().setId(id).setIssuedAt(now).setSubject(subject).setIssuer(issuer)
@@ -73,8 +74,7 @@ public class JWTUtil {
     public String getValue(String jwt) {
         // This line will throw an exception if it is not a signed JWS (as
         // expected)
-        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(key))
-                .parseClaimsJws(jwt).getBody();
+        Claims claims = Jwts.parser().setSigningKey(Base64.getDecoder().decode(key)).parseClaimsJws(jwt).getBody();
 
         return claims.getSubject();
     }
@@ -88,8 +88,7 @@ public class JWTUtil {
     public String getKey(String jwt) {
         // This line will throw an exception if it is not a signed JWS (as
         // expected)
-        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(key))
-                .parseClaimsJws(jwt).getBody();
+        Claims claims = Jwts.parser().setSigningKey(Base64.getDecoder().decode(key)).parseClaimsJws(jwt).getBody();
 
         return claims.getId();
     }

@@ -67,7 +67,7 @@ public class ProyectoAulaController {
     }
 
     private boolean validaToken(String token){
-        String userId = jwtUtil.getKey(token);
+        String userId = jwtUtil.getValue(token);
         return true;
     }
 
