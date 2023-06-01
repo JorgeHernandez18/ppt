@@ -7,7 +7,7 @@ import java.util.Set;
 
 public interface UsuarioDao {
 
-    Usuario getUsuario(String id);
+    Usuario getUsuario(String correo);
 
     void createUsuario(Usuario usuario, Set<UsuarioRol> ur);
 

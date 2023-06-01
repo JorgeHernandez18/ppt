@@ -9,6 +9,8 @@ public interface EstudianteDao {
 
     List<Estudiante> getEstudiante();
 
+    Estudiante getEstudiante(String correo);
+
     void createEstudiante(Estudiante estudiante);
 
 

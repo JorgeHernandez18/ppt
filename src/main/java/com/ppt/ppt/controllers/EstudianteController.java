@@ -21,7 +21,12 @@ public class EstudianteController {
     public List<Estudiante> getEstudiante(){ return estudianteDao.getEstudiante();}
 
     @RequestMapping(value = "api/estudiante", method = RequestMethod.POST)
-    public void createEstudiante(@RequestBody Estudiante estudiante){
+    public void createEstudiante(@RequestBody Estudiante estudiante) throws Exception{
+
+        Estudiante e = estudianteDao.getEstudiante(estudiante.getCorreo_electronico());
+        if(e != null) {
+            throw new Exception("Email de Estudiante ya existe");
+        }
         estudianteDao.createEstudiante(estudiante);
     }
 }

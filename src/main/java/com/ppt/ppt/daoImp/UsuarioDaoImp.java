@@ -1,6 +1,7 @@
 package com.ppt.ppt.daoImp;
 
 import com.ppt.ppt.dao.UsuarioDao;
+import com.ppt.ppt.models.Estudiante;
 import com.ppt.ppt.models.Usuario;
 import com.ppt.ppt.models.UsuarioRol;
 import de.mkammerer.argon2.Argon2;
@@ -22,8 +23,9 @@ public class UsuarioDaoImp implements UsuarioDao {
     private EntityManager entityManager;
 
     @Override
-    public Usuario getUsuario(String id) {
-        return entityManager.find(Usuario.class, id);
+    public Usuario getUsuario(String correo) {
+        String query = "FROM Usuario WHERE correo_electronico = :correo";
+        return (Usuario) entityManager.createQuery(query).getSingleResult();
     }
 
     @Override

@@ -19,11 +19,11 @@ public class AuthController {
     private JWTUtil jwtUtil;
     
     @RequestMapping(value = "api/login", method = RequestMethod.POST)
-    public String login(@RequestBody Usuario usuario){
+    public String login(@RequestBody Usuario usuario) throws Exception{
         Usuario usuarioLog = usuarioDao.obtenerUsuarioPorCredenciales(usuario);
         if(usuarioLog != null) {
             return jwtUtil.create(String.valueOf(usuarioLog.getId()), usuarioLog.getCorreo_electronico());
         }
-        return "No logueado";
+        return "Correo o contraseña incorrecto";
     }
 }

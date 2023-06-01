@@ -20,13 +20,18 @@ public class UsuarioController {
     private UsuarioDao usuarioDao;
 
     @RequestMapping(value = "api/usuario/{id}")
-    public Usuario getUsuario(@PathVariable String id){
-        return usuarioDao.getUsuario(id);
+    public Usuario getUsuario(@PathVariable String correo){
+        return usuarioDao.getUsuario(correo);
     }
 
     //Metodo usado para registrar un usuario
     @RequestMapping(value = "api/usuario/{rol}", method = RequestMethod.POST)
-    public void createUsuario(@RequestBody Usuario usuario,@PathVariable int rol){
+    public void createUsuario(@RequestBody Usuario usuario,@PathVariable int rol) throws Exception{
+        Usuario u = usuarioDao.getUsuario(usuario.getCorreo_electronico());
+        if(u != null)
+            throw new Exception("Email de usuario existente");
+
+
         Set<UsuarioRol> ur = new HashSet<>();
 
         Rol rolAux = new Rol();
@@ -41,8 +46,6 @@ public class UsuarioController {
 
         convertirPassword(usuario);
         usuarioDao.createUsuario(usuario, ur);
-
-
     }
 
     @RequestMapping(value = "api/usuario/{id}", method = RequestMethod.PUT)

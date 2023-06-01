@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
 @Component
@@ -74,7 +75,8 @@ public class JWTUtil {
     public String getValue(String jwt) {
         // This line will throw an exception if it is not a signed JWS (as
         // expected)
-        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(key))
+
+        Claims claims = Jwts.parser().setSigningKey(Base64.getDecoder().decode(key))
                 .parseClaimsJws(jwt).getBody();
 
         return claims.getSubject();
@@ -89,8 +91,9 @@ public class JWTUtil {
     public String getKey(String jwt) {
         // This line will throw an exception if it is not a signed JWS (as
         // expected)
-        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(key))
+        Claims claims = Jwts.parser().setSigningKey(Base64.getDecoder().decode(key))
                 .parseClaimsJws(jwt).getBody();
+
 
         return claims.getId();
     }

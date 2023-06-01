@@ -37,14 +37,11 @@ public class ActividadPAController {
     }
 
     @RequestMapping(value = "api/actividadpa", method = RequestMethod.POST)
-    public void createActividadPA(@RequestBody ActividadPA actividadPA) {
+    public void createActividadPA(@RequestBody ActividadPA actividadPA, @PathVariable int codigo) {
         Set<Estudiante_Apoyo> ea = new HashSet<>();
 
         Estudiante estudiante = new Estudiante();
-        estudiante.setCodigo(1151811);
-        estudiante.setNombre("Jorge");
-        estudiante.setApellido("Hernandez");
-        estudiante.setCorreo_electronico("herlasso@hotmail.com");
+        estudiante.setCodigo(codigo);
 
 
         Estudiante_Apoyo estudiante_apoyo = new Estudiante_Apoyo();

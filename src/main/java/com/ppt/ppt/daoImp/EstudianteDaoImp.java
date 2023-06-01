@@ -24,6 +24,12 @@ public class EstudianteDaoImp implements EstudianteDao {
     }
 
     @Override
+    public Estudiante getEstudiante(String correo) {
+        String query = "FROM Estudiante WHERE correo_electronico = :correo";
+        return (Estudiante) entityManager.createQuery(query).getSingleResult();
+    }
+
+    @Override
     public void createEstudiante(Estudiante estudiante) {
         entityManager.merge(estudiante);
     }
