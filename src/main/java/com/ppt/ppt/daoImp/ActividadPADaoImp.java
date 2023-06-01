@@ -1,8 +1,7 @@
 package com.ppt.ppt.daoImp;
 
 import com.ppt.ppt.dao.ActividadPADao;
-import com.ppt.ppt.models.ActividadPA;
-import com.ppt.ppt.models.Estudiante_Apoyo;
+import com.ppt.ppt.models.*;
 import com.ppt.ppt.repository.ActividadPARepository;
 import com.ppt.ppt.repository.EstudianteRepository;
 import jakarta.persistence.EntityManager;
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -36,6 +36,23 @@ public class ActividadPADaoImp implements ActividadPADao {
     }
 
     @Override
+    public List<ActividadPA> getActividadPAByIdPA(int id) {
+        /*String query = "FROM ProyectoAula";
+        List<ProyectoAula> proyectos = entityManager.createQuery(query).getResultList();
+        List<ActividadPA> actividades = new ArrayList<>();
+        for(ProyectoAula pa: proyectos){
+            if(pa.getId() == id){
+                actividades.add(pa.getActividades());
+                docentes.add(u);
+            }
+        }
+        if(!docentes.isEmpty()){
+            return docentes;
+        }*/
+        return null;
+    }
+
+    @Override
     public ActividadPA getActividadPA(int id) {
         return entityManager.find(ActividadPA.class, id);
     }
@@ -54,7 +71,7 @@ public class ActividadPADaoImp implements ActividadPADao {
         apa.setFecha_fin(actividadPA.getFecha_fin());
         apa.setCumplimiento(actividadPA.getCumplimiento());
         apa.setObservacion(actividadPA.getObservacion());
-        apa.setProyecto_aula(actividadPA.getProyecto_aula());
+        apa.setPa(actividadPA.getPa());
 
         entityManager.merge(apa);
     }

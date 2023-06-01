@@ -2,14 +2,16 @@ package com.ppt.ppt.controllers;
 
 import com.ppt.ppt.dao.ProyectoAulaDao;
 import com.ppt.ppt.dao.UsuarioDao;
-import com.ppt.ppt.models.ProyectoAula;
+import com.ppt.ppt.models.*;
 import com.ppt.ppt.utils.JWTUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/pa")
@@ -61,8 +63,7 @@ public class ProyectoAulaController {
         if (!validaToken(token)) {
             response.setStatus(HttpStatus.FORBIDDEN.value());
         } else {
-            proyectoAulaDao.createProyectoAula(proyectoAula);
-
+                proyectoAulaDao.createProyectoAula(proyectoAula);
         }
     }
 

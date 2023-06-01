@@ -1,8 +1,10 @@
 package com.ppt.ppt.dao;
 
+import com.ppt.ppt.models.ActividadPA;
 import com.ppt.ppt.models.ProyectoAula;
 
 import java.util.List;
+import java.util.Set;
 
 public interface ProyectoAulaDao {
     List<ProyectoAula> getProyectoAula();

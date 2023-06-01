@@ -13,5 +13,7 @@ public interface EstudianteDao {
 
     void createEstudiante(Estudiante estudiante);
 
+    Estudiante getEstudianteById(int id);
+
 
 }

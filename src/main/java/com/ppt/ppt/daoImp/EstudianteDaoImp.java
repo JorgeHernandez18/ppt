@@ -41,4 +41,9 @@ public class EstudianteDaoImp implements EstudianteDao {
     public void createEstudiante(Estudiante estudiante) {
         entityManager.merge(estudiante);
     }
+
+    @Override
+    public Estudiante getEstudianteById(int id) {
+        return entityManager.find(Estudiante.class, id);
+    }
 }

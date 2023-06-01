@@ -10,6 +10,8 @@ public interface ActividadPADao {
 
     List<ActividadPA> getActividadPA();
 
+    List<ActividadPA> getActividadPAByIdPA(int id);
+
     ActividadPA getActividadPA(int id);
 
     void deleteActividadPA(int id);

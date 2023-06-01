@@ -1,6 +1,7 @@
 package com.ppt.ppt.controllers;
 
 import com.ppt.ppt.dao.ActividadPADao;
+import com.ppt.ppt.dao.EstudianteDao;
 import com.ppt.ppt.dao.UsuarioDao;
 import com.ppt.ppt.models.ActividadPA;
 import com.ppt.ppt.models.Estudiante;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,6 +26,9 @@ public class ActividadPAController {
 
     @Autowired
     private UsuarioDao usuarioDao;
+
+    @Autowired
+    private EstudianteDao estudianteDao;
 
     @Autowired
     private JWTUtil jwtUtil;
@@ -60,18 +65,19 @@ public class ActividadPAController {
 
     //No crea la actividad.
     @RequestMapping(value = "api/actividadpa/{codigo}", method = RequestMethod.POST)
-    public void createActividadPA(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @RequestBody ActividadPA actividadPA, @PathVariable int codigo) {
+    public void createActividadPA(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @RequestBody ActividadPA actividadPA, @RequestBody List<Integer> estudiantes, @PathVariable int idPA) {
         if(!validaToken(token)){
              response.setStatus(HttpStatus.FORBIDDEN.value());
         }else {
+            List<Estudiante> e = new ArrayList<>();
+            for(Integer i: estudiantes){
+                e.add(estudianteDao.getEstudianteById(i));
+            }
+
             Set<Estudiante_Apoyo> ea = new HashSet<>();
 
-            Estudiante estudiante = new Estudiante();
-            estudiante.setCodigo(codigo);
-
-
             Estudiante_Apoyo estudiante_apoyo = new Estudiante_Apoyo();
-            estudiante_apoyo.setEstudiante(estudiante);
+            estudiante_apoyo.setEstudiante(null);
             estudiante_apoyo.setActividadPA(actividadPA);
 
             ea.add(estudiante_apoyo);

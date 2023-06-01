@@ -1,7 +1,9 @@
 package com.ppt.ppt.daoImp;
 
 import com.ppt.ppt.dao.ProyectoAulaDao;
+import com.ppt.ppt.models.ActividadPA;
 import com.ppt.ppt.models.ProyectoAula;
+import com.ppt.ppt.models.UsuarioRol;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.context.annotation.Primary;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional

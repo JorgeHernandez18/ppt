@@ -38,17 +38,14 @@ public class JWTUtil {
      * @return
      */
     public String create(String id, String subject) {
-        // The JWT signature algorithm used to sign the token
+
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
-        // Obtener la fecha actual
         Instant now = Instant.now();
 
-        // Crear una clave secreta a partir de la cadena de texto proporcionada
         byte[] apiKeySecretBytes = Base64.getDecoder().decode(key);
         SecretKey secretKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
-        // Construir el JWT
         JwtBuilder builder = Jwts.builder()
                 .setId(id)
                 .setSubject(subject)
@@ -57,12 +54,10 @@ public class JWTUtil {
                 .signWith(signatureAlgorithm, secretKey);
 
         if (ttlMillis >= 0) {
-            // Calcular la fecha de expiración a partir de la fecha actual y el tiempo de expiración en milisegundos
             Instant expiration = now.plusMillis(ttlMillis);
             builder.setExpiration(Date.from(expiration));
         }
 
-        // Generar el token JWT como una cadena compacta
         return builder.compact();
     }
 
@@ -82,8 +77,6 @@ public class JWTUtil {
 
             return claims.getSubject();
         } catch (JwtException e) {
-            // Manejar la excepción en caso de un token inválido
-            // Puedes lanzar una excepción personalizada, retornar null o realizar alguna otra acción apropiada
             log.error("Error al decodificar y validar el token JWT: {}", e.getMessage());
             return null;
         }
@@ -104,8 +97,6 @@ public class JWTUtil {
 
             return claims.getId();
         } catch (JwtException e) {
-            // Manejar la excepción en caso de un token inválido
-            // Puedes lanzar una excepción personalizada, retornar null o realizar alguna otra acción apropiada
             log.error("Error al decodificar y validar el token JWT: {}", e.getMessage());
             return null;
         }
