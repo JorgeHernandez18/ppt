@@ -2,6 +2,7 @@ package com.ppt.ppt.controllers;
 
 import com.ppt.ppt.dao.ActividadPADao;
 import com.ppt.ppt.dao.EstudianteDao;
+import com.ppt.ppt.dao.ProyectoAulaDao;
 import com.ppt.ppt.dao.UsuarioDao;
 import com.ppt.ppt.models.ActividadPA;
 import com.ppt.ppt.models.Estudiante;
@@ -29,6 +30,9 @@ public class ActividadPAController {
 
     @Autowired
     private EstudianteDao estudianteDao;
+
+    @Autowired
+    private ProyectoAulaDao proyectoAulaDao;
 
     @Autowired
     private JWTUtil jwtUtil;
@@ -63,7 +67,7 @@ public class ActividadPAController {
         }
     }
 
-    //No crea la actividad.
+    //Funcionando correctamente
     @RequestMapping(value = "api/actividadpa/{codigo}", method = RequestMethod.POST)
     public void createActividadPA(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @RequestBody ActividadPA actividadPA, @RequestBody List<Integer> estudiantes, @PathVariable int idPA) {
         if(!validaToken(token)){
@@ -76,12 +80,14 @@ public class ActividadPAController {
 
             Set<Estudiante_Apoyo> ea = new HashSet<>();
 
-            Estudiante_Apoyo estudiante_apoyo = new Estudiante_Apoyo();
-            estudiante_apoyo.setEstudiante(null);
-            estudiante_apoyo.setActividadPA(actividadPA);
-
-            ea.add(estudiante_apoyo);
-
+            for(Estudiante student: e) {
+                Estudiante_Apoyo estudiante_apoyo = new Estudiante_Apoyo();
+                estudiante_apoyo.setEstudiante(student);
+                estudiante_apoyo.setActividadPA(actividadPA);
+                ea.add(estudiante_apoyo);
+            }
+            //Buscar Pa por id
+            actividadPA.setPa(proyectoAulaDao.getProyectoAula(idPA));
             actividadPADao.createActividadPA(actividadPA, ea);
         }
     }
