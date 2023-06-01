@@ -16,11 +16,11 @@ public class ActividadPTController {
     private ActividadPTDao actividadPTDao;
 
     //Funciona correctamente
-    @RequestMapping(value = "api/actividadpt")
+    @RequestMapping(value = "api/actividadpt", method = RequestMethod.GET)
     public List<ActividadPT> getActividadPT(){ return actividadPTDao.getActividadPT();}
 
     //Funciona correctamente
-    @RequestMapping(value = "api/actividadpt/{id}")
+    @RequestMapping(value = "api/actividadpt/{id}", method = RequestMethod.GET)
     public ActividadPT getActividadPT(@PathVariable int id){
         return actividadPTDao.getActividadPT(id);
     }

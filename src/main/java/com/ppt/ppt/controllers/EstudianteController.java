@@ -18,7 +18,7 @@ public class EstudianteController {
     private EstudianteDao estudianteDao;
 
     //Funcionando correctamente
-    @RequestMapping(value = "api/estudiante")
+    @RequestMapping(value = "api/estudiante", method = RequestMethod.GET)
     public List<Estudiante> getEstudiante(){ return estudianteDao.getEstudiante();}
 
     //Funcionando correctamente

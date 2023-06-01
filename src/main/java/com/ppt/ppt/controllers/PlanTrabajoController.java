@@ -15,11 +15,11 @@ public class PlanTrabajoController {
     private PlanTrabajoDao planTrabajoDao;
 
     //Funciona correctamente
-    @RequestMapping(value = "api/plantrabajo")
+    @RequestMapping(value = "api/plantrabajo", method = RequestMethod.GET)
     public List<PlanTrabajo> getPlanTrabajo(){ return planTrabajoDao.getPlanTrabajo();}
 
     //Funciona correctamente, sin control de id
-    @RequestMapping(value = "api/plantrabajo/{id}")
+    @RequestMapping(value = "api/plantrabajo/{id}", method = RequestMethod.GET)
     public PlanTrabajo getPlanTrabajo(@PathVariable int id){
         return planTrabajoDao.getPlanTrabajo(id);
     }

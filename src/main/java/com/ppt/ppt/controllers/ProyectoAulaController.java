@@ -26,11 +26,11 @@ public class ProyectoAulaController {
     private JWTUtil jwtUtil;
 
     //Funciona correctamente
-    @RequestMapping(value = "api/proyectoaula")
+    @RequestMapping(value = "api/proyectoaula", method = RequestMethod.GET)
     public List<ProyectoAula> getProyectoAula(){ return proyectoAulaDao.getProyectoAula();}
 
     //Funciona correctamente, sin control de id
-    @RequestMapping(value = "api/proyectoaula/{id}")
+    @RequestMapping(value = "api/proyectoaula/{id}", method = RequestMethod.GET)
     public ProyectoAula getProyectoAula(@PathVariable int id){
         return proyectoAulaDao.getProyectoAula(id);
     }

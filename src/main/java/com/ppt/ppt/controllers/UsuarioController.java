@@ -25,7 +25,7 @@ public class UsuarioController {
     private JWTUtil jwtUtil;
 
     //Testeado y funcionando correctamente
-    @RequestMapping(value = "api/usuario/{correo}")
+    @RequestMapping(value = "api/usuario/{correo}", method = RequestMethod.GET)
     public Usuario getUsuario(@PathVariable String correo) throws Exception {
         return usuarioDao.getUsuario(correo);
     }
@@ -69,17 +69,17 @@ public class UsuarioController {
     }
 
     //Funcionando correctamente
-    @RequestMapping(value = "api/docentes_apoyo")
+    @RequestMapping(value = "api/docentes_apoyo", method = RequestMethod.GET)
     public List<Usuario> docentesApoyo() throws Exception {return usuarioDao.docentesApoyo();}
 
     //Funcionando correctamente
-    @RequestMapping(value = "api/docentes_lider")
+    @RequestMapping(value = "api/docentes_lider", method = RequestMethod.GET)
     public List<Usuario> docentesLider() throws Exception {return usuarioDao.docentesLider();}
 
-    @RequestMapping(value = "api/es_docente/{id}")
+    @RequestMapping(value = "api/es_docente/{id}", method = RequestMethod.GET)
     public boolean esDocente(@PathVariable int id){return usuarioDao.esDocente(id);}
 
-    @RequestMapping(value = "api/es_docente_lider/{id}")
+    @RequestMapping(value = "api/es_docente_lider/{id}", method = RequestMethod.GET)
     public boolean esDocenteLider(@PathVariable int id){return usuarioDao.esDocenteLider(id);}
 
     //Funcionando correctamente

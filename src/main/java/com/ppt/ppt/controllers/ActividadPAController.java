@@ -29,11 +29,11 @@ public class ActividadPAController {
     private JWTUtil jwtUtil;
 
     //Funciona correctamente
-    @RequestMapping(value = "api/actividadpa")
+    @RequestMapping(value = "api/actividadpa", method = RequestMethod.GET)
     public List<ActividadPA> getActividadPA(){ return actividadPADao.getActividadPA();}
 
     //Funciona correctamente, sin validación de id
-    @RequestMapping(value = "api/actividadpa/{id}")
+    @RequestMapping(value = "api/actividadpa/{id}", method = RequestMethod.GET)
     public ActividadPA getActividadPA(@PathVariable int id){
         return actividadPADao.getActividadPA(id);
     }
