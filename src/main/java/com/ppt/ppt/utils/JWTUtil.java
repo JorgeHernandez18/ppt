@@ -1,16 +1,15 @@
 package com.ppt.ppt.utils;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtBuilder;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
+import java.time.Instant;
 import java.util.Base64;
 import java.util.Date;
 
@@ -39,31 +38,34 @@ public class JWTUtil {
      * @return
      */
     public String create(String id, String subject) {
-
         // The JWT signature algorithm used to sign the token
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 
-        long nowMillis = System.currentTimeMillis();
-        Date now = new Date(nowMillis);
+        // Obtener la fecha actual
+        Instant now = Instant.now();
 
-        //  sign JWT with our ApiKey secret
+        // Crear una clave secreta a partir de la cadena de texto proporcionada
         byte[] apiKeySecretBytes = Base64.getDecoder().decode(key);
-        Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
+        SecretKey secretKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
-
-        //  set the JWT Claims
-        JwtBuilder builder = Jwts.builder().setId(id).setIssuedAt(now).setSubject(subject).setIssuer(issuer)
-                .signWith(signatureAlgorithm, signingKey);
+        // Construir el JWT
+        JwtBuilder builder = Jwts.builder()
+                .setId(id)
+                .setSubject(subject)
+                .setIssuer(issuer)
+                .setIssuedAt(Date.from(now))
+                .signWith(signatureAlgorithm, secretKey);
 
         if (ttlMillis >= 0) {
-            long expMillis = nowMillis + ttlMillis;
-            Date exp = new Date(expMillis);
-            builder.setExpiration(exp);
+            // Calcular la fecha de expiración a partir de la fecha actual y el tiempo de expiración en milisegundos
+            Instant expiration = now.plusMillis(ttlMillis);
+            builder.setExpiration(Date.from(expiration));
         }
 
-        // Builds the JWT and serializes it to a compact, URL-safe string
+        // Generar el token JWT como una cadena compacta
         return builder.compact();
     }
+
 
     /**
      * Method to validate and read the JWT
@@ -72,11 +74,19 @@ public class JWTUtil {
      * @return
      */
     public String getValue(String jwt) {
-        // This line will throw an exception if it is not a signed JWS (as
-        // expected)
-        Claims claims = Jwts.parser().setSigningKey(Base64.getDecoder().decode(key)).parseClaimsJws(jwt).getBody();
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(Base64.getDecoder().decode(key))
+                    .parseClaimsJws(jwt)
+                    .getBody();
 
-        return claims.getSubject();
+            return claims.getSubject();
+        } catch (JwtException e) {
+            // Manejar la excepción en caso de un token inválido
+            // Puedes lanzar una excepción personalizada, retornar null o realizar alguna otra acción apropiada
+            log.error("Error al decodificar y validar el token JWT: {}", e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -86,10 +96,18 @@ public class JWTUtil {
      * @return
      */
     public String getKey(String jwt) {
-        // This line will throw an exception if it is not a signed JWS (as
-        // expected)
-        Claims claims = Jwts.parser().setSigningKey(Base64.getDecoder().decode(key)).parseClaimsJws(jwt).getBody();
+        try {
+            Claims claims = Jwts.parser()
+                    .setSigningKey(Base64.getDecoder().decode(key))
+                    .parseClaimsJws(jwt)
+                    .getBody();
 
-        return claims.getId();
+            return claims.getId();
+        } catch (JwtException e) {
+            // Manejar la excepción en caso de un token inválido
+            // Puedes lanzar una excepción personalizada, retornar null o realizar alguna otra acción apropiada
+            log.error("Error al decodificar y validar el token JWT: {}", e.getMessage());
+            return null;
+        }
     }
 }
