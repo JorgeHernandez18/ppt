@@ -113,4 +113,22 @@ public class UsuarioDaoImp implements UsuarioDao {
         }
         return null;
     }
+
+    @Override
+    public List<Usuario> docentesLider() {
+
+        String query = "FROM UsuarioRol";
+        List<UsuarioRol> usuarioRoles = entityManager.createQuery(query).getResultList();
+        List<Usuario> lideres = new ArrayList<>();
+        for(UsuarioRol ur: usuarioRoles){
+            if(ur.getRol().getId() == 1){
+                Usuario u = entityManager.find(Usuario.class, ur.getUsuario().getId());
+                lideres.add(u);
+            }
+        }
+        if(!lideres.isEmpty()){
+            return lideres;
+        }
+        return null;
+    }
 }

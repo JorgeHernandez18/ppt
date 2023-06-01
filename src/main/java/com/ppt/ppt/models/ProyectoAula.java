@@ -19,9 +19,11 @@ public class ProyectoAula {
     @Column(name = "nombre")
     private String nombre;
 
+    //Metodo que retorna los ejes transversales para obtener id acá
     @Column(name = "id_eje_transversal")
     private int id_eje_transversal;
 
+    //Metodo que retorna tipos de eje para obtener el id acá
     @Column(name = "tipo_eje")
     private int tipo_eje;
 
@@ -33,9 +35,11 @@ public class ProyectoAula {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha_fin;
 
+    //En usuario controller tengo metodo para listar docentes_lider para guardar el id acá
     @Column(name = "docente_lider")
     private int docente_lider;
 
+    //Metodo que retorna la lista de los grados para guardar el id acá
     @Column(name = "grado")
     private int grado;
 

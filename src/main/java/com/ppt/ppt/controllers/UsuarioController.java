@@ -28,11 +28,11 @@ public class UsuarioController {
 
     //Metodo usado para registrar un usuario
     @RequestMapping(value = "api/usuario/{rol}", method = RequestMethod.POST)
-    public void createUsuario(@RequestBody Usuario usuario,@PathVariable int rol) throws Exception{
+    public void createUsuario(@RequestBody Usuario usuario, @PathVariable int rol) throws Exception {
         Usuario u = usuarioDao.getUsuario(usuario.getCorreo_electronico());
-        if(u != null) {
+        if (u != null) {
             throw new Exception("Email de usuario existente");
-        }else {
+        } else {
 
             Set<UsuarioRol> ur = new HashSet<>();
 
@@ -53,17 +53,21 @@ public class UsuarioController {
 
     //Funcionando correctamente
     @RequestMapping(value = "api/usuario/{id}", method = RequestMethod.PUT)
-    public void updateUsuario(@RequestBody Usuario usuario, @PathVariable String id){
+    public void updateUsuario(@RequestBody Usuario usuario, @PathVariable String id) {
         convertirPassword(usuario);
         usuarioDao.updateUsuario(usuario, id);
     }
 
     //Funcionando correctamente
     @RequestMapping(value = "api/docentes_apoyo")
-    public List<Usuario> docentesApoyo(){ return usuarioDao.docentesApoyo();}
+    public List<Usuario> docentesApoyo() throws Exception {return usuarioDao.docentesApoyo();}
 
     //Funcionando correctamente
-    private void convertirPassword(Usuario usuario){
+    @RequestMapping(value = "api/docentes_lider")
+    public List<Usuario> docentesLider() throws Exception {return usuarioDao.docentesLider();}
+
+    //Funcionando correctamente
+    private void convertirPassword(Usuario usuario) {
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
         String hash = argon2.hash(1, 1024, 1, usuario.getPassword().toCharArray());
         usuario.setPassword(hash);

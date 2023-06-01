@@ -22,6 +22,7 @@ public class ActividadPT {
     @Column(name = "fecha_fin")
     private String fecha_fin;
 
+    //Tengo un metodo en usuarioController para listar todos los docentes de apoyo.
     @Column(name = "docente_apoyo")
     private int docente_apoyo;
 
@@ -31,6 +32,7 @@ public class ActividadPT {
     @Column(name = "observacion")
     private String observacion;
 
+    //Buscar plan de trabajo por id
     @Column(name = "plan_trabajo")
     private int plan_trabajo;
 }

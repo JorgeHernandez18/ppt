@@ -41,7 +41,7 @@ public class ActividadPAController {
     }
 
     //No crea la actividad.
-    @RequestMapping(value = "api/actividadpa", method = RequestMethod.POST)
+    @RequestMapping(value = "api/actividadpa/{codigo}", method = RequestMethod.POST)
     public void createActividadPA(@RequestBody ActividadPA actividadPA, @PathVariable int codigo) {
         Set<Estudiante_Apoyo> ea = new HashSet<>();
 

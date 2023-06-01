@@ -33,6 +33,7 @@ public class ActividadPA {
     @Column(name = "observacion")
     private String observacion;
 
+    //Buscar proyecto de aula por id
     @Column(name = "proyecto_aula")
     private int proyecto_aula;
 

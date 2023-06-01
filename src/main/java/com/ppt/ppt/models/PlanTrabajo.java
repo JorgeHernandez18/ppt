@@ -16,6 +16,7 @@ public class PlanTrabajo {
     @Column(name = "anio")
     private String anio;
 
+    //Metodo que retorna los ejes transversales para obtener id acá
     @Column(name = "id_eje_transversal")
     private int id_eje_transversal;
 

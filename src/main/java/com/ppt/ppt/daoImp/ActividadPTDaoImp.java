@@ -2,6 +2,7 @@ package com.ppt.ppt.daoImp;
 
 import com.ppt.ppt.dao.ActividadPTDao;
 import com.ppt.ppt.models.ActividadPT;
+import com.ppt.ppt.models.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -50,7 +51,6 @@ public class ActividadPTDaoImp implements ActividadPTDao {
     }
 
     @Override
-    public void createActividadPT(ActividadPT actividadPT) {
-        entityManager.merge(actividadPT);
-    }
+    public void createActividadPT(ActividadPT actividadPT) {entityManager.merge(actividadPT);}
+
 }

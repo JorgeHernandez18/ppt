@@ -19,4 +19,6 @@ public interface UsuarioDao {
     boolean esDocente(Usuario usuario);
 
     List<Usuario> docentesApoyo();
+
+    List<Usuario> docentesLider();
 }
