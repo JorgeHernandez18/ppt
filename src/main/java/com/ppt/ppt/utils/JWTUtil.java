@@ -1,8 +1,5 @@
 package com.ppt.ppt.utils;
 
-import io.jsonwebtoken.security.Keys;
-import jakarta.xml.bind.DatatypeConverter;
-import org.springframework.stereotype.Component;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -10,11 +7,16 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
-import java.util.Base64;
 import java.util.Date;
 
+/**
+ * @author Mahesh
+ */
 @Component
 public class JWTUtil {
     @Value("${security.jwt.secret}")
@@ -46,15 +48,11 @@ public class JWTUtil {
 
         //  sign JWT with our ApiKey secret
         byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(key);
-        Key signingKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);;
+        Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
         //  set the JWT Claims
-        JwtBuilder builder = Jwts.builder()
-                .setId(id)
-                .setIssuedAt(now)
-                .setSubject(subject)
-                .setIssuer(issuer)
-                .signWith(signingKey);
+        JwtBuilder builder = Jwts.builder().setId(id).setIssuedAt(now).setSubject(subject).setIssuer(issuer)
+                .signWith(signatureAlgorithm, signingKey);
 
         if (ttlMillis >= 0) {
             long expMillis = nowMillis + ttlMillis;
@@ -75,8 +73,7 @@ public class JWTUtil {
     public String getValue(String jwt) {
         // This line will throw an exception if it is not a signed JWS (as
         // expected)
-
-        Claims claims = Jwts.parser().setSigningKey(Base64.getDecoder().decode(key))
+        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(key))
                 .parseClaimsJws(jwt).getBody();
 
         return claims.getSubject();
@@ -91,9 +88,8 @@ public class JWTUtil {
     public String getKey(String jwt) {
         // This line will throw an exception if it is not a signed JWS (as
         // expected)
-        Claims claims = Jwts.parser().setSigningKey(Base64.getDecoder().decode(key))
+        Claims claims = Jwts.parser().setSigningKey(DatatypeConverter.parseBase64Binary(key))
                 .parseClaimsJws(jwt).getBody();
-
 
         return claims.getId();
     }

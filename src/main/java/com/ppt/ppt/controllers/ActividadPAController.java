@@ -1,10 +1,14 @@
 package com.ppt.ppt.controllers;
 
 import com.ppt.ppt.dao.ActividadPADao;
+import com.ppt.ppt.dao.UsuarioDao;
 import com.ppt.ppt.models.ActividadPA;
 import com.ppt.ppt.models.Estudiante;
 import com.ppt.ppt.models.Estudiante_Apoyo;
+import com.ppt.ppt.utils.JWTUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -18,6 +22,12 @@ public class ActividadPAController {
     @Autowired
     private ActividadPADao actividadPADao;
 
+    @Autowired
+    private UsuarioDao usuarioDao;
+
+    @Autowired
+    private JWTUtil jwtUtil;
+
     //Funciona correctamente
     @RequestMapping(value = "api/actividadpa")
     public List<ActividadPA> getActividadPA(){ return actividadPADao.getActividadPA();}
@@ -30,31 +40,48 @@ public class ActividadPAController {
 
     //Funciona, aplicar excepcion para id no existente
     @RequestMapping(value = "api/actividadpa/{id}", method = RequestMethod.DELETE)
-    public void deleteActividadPA(@PathVariable int id){
-        actividadPADao.deleteActividadPA(id);
+    public void deleteActividadPA(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @PathVariable int id){
+        if (!validaToken(token)){
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+        }else{
+            actividadPADao.deleteActividadPA(id);
+        }
     }
 
     //Funciona, aplicar excepcion para id no existente
     @RequestMapping(value = "api/actividadpa/{id}", method = RequestMethod.PUT)
-    public void updateActividadPA(@RequestBody ActividadPA actividadPA, @PathVariable int id){
-        actividadPADao.updateActividadPA(actividadPA,id);
+    public void updateActividadPA(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @RequestBody ActividadPA actividadPA, @PathVariable int id){
+        if(!validaToken(token)){
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+        }else {
+            actividadPADao.updateActividadPA(actividadPA, id);
+        }
     }
 
     //No crea la actividad.
     @RequestMapping(value = "api/actividadpa/{codigo}", method = RequestMethod.POST)
-    public void createActividadPA(@RequestBody ActividadPA actividadPA, @PathVariable int codigo) {
-        Set<Estudiante_Apoyo> ea = new HashSet<>();
+    public void createActividadPA(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @RequestBody ActividadPA actividadPA, @PathVariable int codigo) {
+        if(!validaToken(token)){
+             response.setStatus(HttpStatus.FORBIDDEN.value());
+        }else {
+            Set<Estudiante_Apoyo> ea = new HashSet<>();
 
-        Estudiante estudiante = new Estudiante();
-        estudiante.setCodigo(codigo);
+            Estudiante estudiante = new Estudiante();
+            estudiante.setCodigo(codigo);
 
 
-        Estudiante_Apoyo estudiante_apoyo = new Estudiante_Apoyo();
-        estudiante_apoyo.setEstudiante(estudiante);
-        estudiante_apoyo.setActividadPA(actividadPA);
+            Estudiante_Apoyo estudiante_apoyo = new Estudiante_Apoyo();
+            estudiante_apoyo.setEstudiante(estudiante);
+            estudiante_apoyo.setActividadPA(actividadPA);
 
-        ea.add(estudiante_apoyo);
+            ea.add(estudiante_apoyo);
 
-        actividadPADao.createActividadPA(actividadPA, ea);
+            actividadPADao.createActividadPA(actividadPA, ea);
+        }
+    }
+
+    private boolean validaToken(String token){
+        int userId = Integer.parseInt(jwtUtil.getKey(token));
+        return usuarioDao.esDocenteLider(userId);
     }
 }

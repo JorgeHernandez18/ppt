@@ -84,17 +84,29 @@ public class UsuarioDaoImp implements UsuarioDao {
     }
 
     @Override
-    public boolean esDocente(Usuario usuario) {
-        Set<UsuarioRol> ur = new HashSet<>();
-        ur = usuario.getUsuarioRoles();
+    public boolean esDocente(int id) {
+        Usuario usuario = entityManager.find(Usuario.class, id);
+        Set<UsuarioRol> ur = usuario.getUsuarioRoles();
 
         for(UsuarioRol usuarioRol: ur){
-            if(usuarioRol.getRol().equals(2))
+            if(usuarioRol.getRol().getId() == 2)
                 return true;
         }
-
         return false;
     }
+
+    @Override
+    public boolean esDocenteLider(int id) {
+            Usuario usuario = entityManager.find(Usuario.class, id);
+            Set<UsuarioRol> ur = usuario.getUsuarioRoles();
+
+            for(UsuarioRol usuarioRol: ur){
+                if(usuarioRol.getRol().getId() == 1)
+                    return true;
+            }
+            return false;
+    }
+
 
     @Override
     public List<Usuario> docentesApoyo() {

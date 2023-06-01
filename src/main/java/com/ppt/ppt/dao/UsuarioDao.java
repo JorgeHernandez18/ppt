@@ -16,7 +16,9 @@ public interface UsuarioDao {
 
     Usuario obtenerUsuarioPorCredenciales(Usuario usuario);
 
-    boolean esDocente(Usuario usuario);
+    boolean esDocente(int id);
+
+    boolean esDocenteLider(int id);
 
     List<Usuario> docentesApoyo();
 

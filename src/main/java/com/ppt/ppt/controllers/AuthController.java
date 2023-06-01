@@ -23,6 +23,7 @@ public class AuthController {
     public String login(@RequestBody Usuario usuario) throws Exception{
         Usuario usuarioLog = usuarioDao.obtenerUsuarioPorCredenciales(usuario);
         if(usuarioLog != null) {
+            System.out.println(jwtUtil.create(String.valueOf(usuarioLog.getId()), usuarioLog.getCorreo_electronico()));
             return jwtUtil.create(String.valueOf(usuarioLog.getId()), usuarioLog.getCorreo_electronico());
         }
         return "Correo o contraseña incorrecto";

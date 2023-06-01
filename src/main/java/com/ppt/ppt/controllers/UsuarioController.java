@@ -2,6 +2,7 @@ package com.ppt.ppt.controllers;
 
 import com.ppt.ppt.dao.UsuarioDao;
 import com.ppt.ppt.models.*;
+import com.ppt.ppt.utils.JWTUtil;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioDao usuarioDao;
+
+    @Autowired
+    private JWTUtil jwtUtil;
 
     //Testeado y funcionando correctamente
     @RequestMapping(value = "api/usuario/{correo}")
@@ -53,9 +57,15 @@ public class UsuarioController {
 
     //Funcionando correctamente
     @RequestMapping(value = "api/usuario/{id}", method = RequestMethod.PUT)
-    public void updateUsuario(@RequestBody Usuario usuario, @PathVariable String id) {
-        convertirPassword(usuario);
-        usuarioDao.updateUsuario(usuario, id);
+    public void updateUsuario(@RequestHeader(value = "Authorization") String token, @RequestBody Usuario usuario, @PathVariable String id) {
+
+        String idUsuario = jwtUtil.getKey(token);
+        if(idUsuario == null){
+            return;
+        }else {
+            convertirPassword(usuario);
+            usuarioDao.updateUsuario(usuario, id);
+        }
     }
 
     //Funcionando correctamente
@@ -65,6 +75,12 @@ public class UsuarioController {
     //Funcionando correctamente
     @RequestMapping(value = "api/docentes_lider")
     public List<Usuario> docentesLider() throws Exception {return usuarioDao.docentesLider();}
+
+    @RequestMapping(value = "api/es_docente/{id}")
+    public boolean esDocente(@PathVariable int id){return usuarioDao.esDocente(id);}
+
+    @RequestMapping(value = "api/es_docente_lider/{id}")
+    public boolean esDocenteLider(@PathVariable int id){return usuarioDao.esDocenteLider(id);}
 
     //Funcionando correctamente
     private void convertirPassword(Usuario usuario) {
