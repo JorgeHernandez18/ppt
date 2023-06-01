@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/pa")
+@RequestMapping("pa")
 public class ProyectoAulaController {
 
 
@@ -40,9 +40,9 @@ public class ProyectoAulaController {
 
     //Funciona correctamente, sin control de id
     @RequestMapping(value = "api/proyectoaula/{id}", method = RequestMethod.DELETE)
-    public void deleteProyectoAula(@RequestHeader(value = "Authorization") String token, @PathVariable int id){
+    public void deleteProyectoAula(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @PathVariable int id){
         if(!validaToken(token)){
-            return;
+            response.setStatus(HttpStatus.FORBIDDEN.value());
         }else {
             proyectoAulaDao.deleteProyectoAula(id);
         }
@@ -50,9 +50,9 @@ public class ProyectoAulaController {
 
     //Funciona correctamente, sin control de id
     @RequestMapping(value = "api/proyectoaula/{id}", method = RequestMethod.PUT)
-    public void updateProyectoAula(@RequestHeader(value = "Authorization") String token,@RequestBody ProyectoAula proyectoAula,@PathVariable int id){
+    public void updateProyectoAula(@RequestHeader(value = "Authorization") String token, HttpServletResponse response,@RequestBody ProyectoAula proyectoAula,@PathVariable int id){
         if(!validaToken(token)){
-            return;
+            response.setStatus(HttpStatus.FORBIDDEN.value());
         }else {
             proyectoAulaDao.updateProyectoAula(proyectoAula, id);
         }
@@ -60,17 +60,19 @@ public class ProyectoAulaController {
 
     //Funciona correctamente
     @RequestMapping(value = "api/proyectoaula", method = RequestMethod.POST)
-    public void createProyectoAula(@RequestHeader(value = "Authorization") String token, @RequestBody ProyectoAula proyectoAula) {
+    public void createProyectoAula(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @RequestBody ProyectoAula proyectoAula) {
         if (!validaToken(token)) {
-            return;
+            response.setStatus(HttpStatus.FORBIDDEN.value());
         } else {
                 proyectoAulaDao.createProyectoAula(proyectoAula);
         }
     }
 
     private boolean validaToken(String token){
-        String userId = jwtUtil.getValue(token);
-        return true;
+        System.out.println(jwtUtil.getKey(token));
+        int userId = Integer.parseInt(jwtUtil.getKey(token));
+
+        return usuarioDao.esDocenteLider(userId);
     }
 
 }
