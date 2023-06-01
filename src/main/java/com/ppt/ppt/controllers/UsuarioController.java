@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RestController
@@ -19,8 +20,8 @@ public class UsuarioController {
     @Autowired
     private UsuarioDao usuarioDao;
 
-    @RequestMapping(value = "api/usuario/{id}")
-    public Usuario getUsuario(@PathVariable String correo){
+    @RequestMapping(value = "api/usuario/{correo}")
+    public Usuario getUsuario(@PathVariable String correo) throws Exception {
         return usuarioDao.getUsuario(correo);
     }
 
@@ -28,24 +29,25 @@ public class UsuarioController {
     @RequestMapping(value = "api/usuario/{rol}", method = RequestMethod.POST)
     public void createUsuario(@RequestBody Usuario usuario,@PathVariable int rol) throws Exception{
         Usuario u = usuarioDao.getUsuario(usuario.getCorreo_electronico());
-        if(u != null)
+        if(u != null) {
             throw new Exception("Email de usuario existente");
+        }else {
+
+            Set<UsuarioRol> ur = new HashSet<>();
+
+            Rol rolAux = new Rol();
+            rolAux.setId(rol);
 
 
-        Set<UsuarioRol> ur = new HashSet<>();
+            UsuarioRol usuarioRol = new UsuarioRol();
+            usuarioRol.setRol(rolAux);
+            usuarioRol.setUsuario(usuario);
 
-        Rol rolAux = new Rol();
-        rolAux.setId(rol);
+            ur.add(usuarioRol);
 
-
-        UsuarioRol usuarioRol = new UsuarioRol();
-        usuarioRol.setRol(rolAux);
-        usuarioRol.setUsuario(usuario);
-
-        ur.add(usuarioRol);
-
-        convertirPassword(usuario);
-        usuarioDao.createUsuario(usuario, ur);
+            convertirPassword(usuario);
+            usuarioDao.createUsuario(usuario, ur);
+        }
     }
 
     @RequestMapping(value = "api/usuario/{id}", method = RequestMethod.PUT)
@@ -53,6 +55,9 @@ public class UsuarioController {
         convertirPassword(usuario);
         usuarioDao.updateUsuario(usuario, id);
     }
+
+    @RequestMapping(value = "api/docentes_apoyo")
+    public List<Usuario> docentesApoyo(){ return usuarioDao.docentesApoyo();}
 
     private void convertirPassword(Usuario usuario){
         Argon2 argon2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);

@@ -31,6 +31,6 @@ public class ActividadPT {
     @Column(name = "observacion")
     private String observacion;
 
-    @Column(name = "proyecto_aula")
-    private int proyecto_aula;
+    @Column(name = "plan_trabajo")
+    private int plan_trabajo;
 }

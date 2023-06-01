@@ -7,10 +7,14 @@ import com.ppt.ppt.models.UsuarioRol;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,9 +27,19 @@ public class UsuarioDaoImp implements UsuarioDao {
     private EntityManager entityManager;
 
     @Override
-    public Usuario getUsuario(String correo) {
-        String query = "FROM Usuario WHERE correo_electronico = :correo";
-        return (Usuario) entityManager.createQuery(query).getSingleResult();
+    public Usuario getUsuario(String correo) throws Exception{
+
+        try {
+            String query = "FROM Usuario WHERE correo_electronico = :correo";
+            Usuario u = (Usuario) entityManager.createQuery(query)
+                    .setParameter("correo", correo)
+                    .getSingleResult();
+
+            return u;
+        }catch (NoResultException e){
+
+            return null;
+        }
     }
 
     @Override
@@ -65,6 +79,37 @@ public class UsuarioDaoImp implements UsuarioDao {
 
         if(argon2.verify(passwordHashed, usuario.getPassword().toCharArray())){
             return lista.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean esDocente(Usuario usuario) {
+        Set<UsuarioRol> ur = new HashSet<>();
+        ur = usuario.getUsuarioRoles();
+
+        for(UsuarioRol usuarioRol: ur){
+            if(usuarioRol.getRol().equals(2))
+                return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public List<Usuario> docentesApoyo() {
+
+        String query = "FROM UsuarioRol";
+        List<UsuarioRol> usuarioRoles = entityManager.createQuery(query).getResultList();
+        List<Usuario> docentes = new ArrayList<>();
+        for(UsuarioRol ur: usuarioRoles){
+            if(ur.getRol().getId() == 2){
+                Usuario u = entityManager.find(Usuario.class, ur.getUsuario().getId());
+                docentes.add(u);
+            }
+        }
+        if(!docentes.isEmpty()){
+            return docentes;
         }
         return null;
     }
