@@ -16,4 +16,6 @@ public interface ProyectoAulaDao {
     void updateProyectoAula(ProyectoAula proyectoAula, int id);
 
     void createProyectoAula(ProyectoAula proyectoAula);
+
+    void cargarActividades(ActividadPA actividad);
 }

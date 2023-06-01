@@ -58,4 +58,9 @@ public class ProyectoAulaDaoImpl implements ProyectoAulaDao {
     public void createProyectoAula(ProyectoAula proyectoAula) {
         entityManager.merge(proyectoAula);
     }
+
+    @Override
+    public void cargarActividades(ActividadPA actividad) {
+
+    }
 }

@@ -24,29 +24,6 @@ public class PptApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		/*ActividadPA actividadPA = new ActividadPA();
-		actividadPA.setNombre("actividad prueba");
-		actividadPA.setFecha_inicio("2023-06-10");
-		actividadPA.setFecha_fin("2023-06-14");
-		actividadPA.setProyecto_aula(2);
-		actividadPA.setCumplimiento((byte) 1);
-		actividadPA.setObservacion("observacion");
-
-		Estudiante e = new Estudiante();
-		e.setCodigo(1151810);
-		e.setNombre("Juan");
-		e.setApellido("Garcia");
-		e.setCorreo_electronico("juano@gmail.com");
-
-		Set<Estudiante_Apoyo> ea = new HashSet<>();
-		Estudiante_Apoyo estudiante_apoyo = new Estudiante_Apoyo();
-		estudiante_apoyo.setEstudiante(e);
-		estudiante_apoyo.setActividadPA(actividadPA);
-
-		ea.add(estudiante_apoyo);
-		ActividadPA acti = actividadPADao.createActividadPA(actividadPA, ea);
-		System.out.println(acti.getNombre());*/
-
 
 	}
 }

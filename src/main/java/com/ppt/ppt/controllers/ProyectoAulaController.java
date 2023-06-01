@@ -7,6 +7,7 @@ import com.ppt.ppt.utils.JWTUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -39,9 +40,9 @@ public class ProyectoAulaController {
 
     //Funciona correctamente, sin control de id
     @RequestMapping(value = "api/proyectoaula/{id}", method = RequestMethod.DELETE)
-    public void deleteProyectoAula(@RequestHeader(value = "Authorization") String token, @PathVariable int id,  HttpServletResponse response){
+    public void deleteProyectoAula(@RequestHeader(value = "Authorization") String token, @PathVariable int id){
         if(!validaToken(token)){
-            response.setStatus(HttpStatus.FORBIDDEN.value());
+            return;
         }else {
             proyectoAulaDao.deleteProyectoAula(id);
         }
@@ -49,9 +50,9 @@ public class ProyectoAulaController {
 
     //Funciona correctamente, sin control de id
     @RequestMapping(value = "api/proyectoaula/{id}", method = RequestMethod.PUT)
-    public void updateProyectoAula(@RequestHeader(value = "Authorization") String token,@RequestBody ProyectoAula proyectoAula,@PathVariable int id, HttpServletResponse response){
+    public void updateProyectoAula(@RequestHeader(value = "Authorization") String token,@RequestBody ProyectoAula proyectoAula,@PathVariable int id){
         if(!validaToken(token)){
-            response.setStatus(HttpStatus.FORBIDDEN.value());
+            return;
         }else {
             proyectoAulaDao.updateProyectoAula(proyectoAula, id);
         }
@@ -59,9 +60,9 @@ public class ProyectoAulaController {
 
     //Funciona correctamente
     @RequestMapping(value = "api/proyectoaula", method = RequestMethod.POST)
-    public void createProyectoAula(@RequestHeader(value = "Authorization") String token, @RequestBody ProyectoAula proyectoAula, HttpServletResponse response) {
+    public void createProyectoAula(@RequestHeader(value = "Authorization") String token, @RequestBody ProyectoAula proyectoAula) {
         if (!validaToken(token)) {
-            response.setStatus(HttpStatus.FORBIDDEN.value());
+            return;
         } else {
                 proyectoAulaDao.createProyectoAula(proyectoAula);
         }
