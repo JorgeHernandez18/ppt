@@ -53,7 +53,7 @@ public class UsuarioDaoImp implements UsuarioDao {
     }
 
     @Override
-    public void updateUsuario(Usuario usuario, String id) {
+    public void updateUsuario(Usuario usuario, int id) {
         Usuario u = entityManager.find(Usuario.class, id);
         u.setNombre(usuario.getNombre());
         u.setApellido(usuario.getApellido());

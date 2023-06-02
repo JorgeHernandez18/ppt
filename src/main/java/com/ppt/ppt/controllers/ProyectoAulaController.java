@@ -32,18 +32,25 @@ public class ProyectoAulaController {
     @RequestMapping(value = "api/proyectoaula", method = RequestMethod.GET)
     public List<ProyectoAula> getProyectoAula(){ return proyectoAulaDao.getProyectoAula();}
 
-    //Funciona correctamente, sin control de id
+    //Funciona correctamente, con control de id
     @RequestMapping(value = "api/proyectoaula/{id}", method = RequestMethod.GET)
-    public ProyectoAula getProyectoAula(@PathVariable int id){
+    public ProyectoAula getProyectoAula(@PathVariable int id, HttpServletResponse response){
+        if(proyectoAulaDao.getProyectoAula(id) == null){
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
         return proyectoAulaDao.getProyectoAula(id);
     }
 
-    //Funciona correctamente, sin control de id
+    //Funciona correctamente, con control de id
+    //No elimina por manejo de Foranea
     @RequestMapping(value = "api/proyectoaula/{id}", method = RequestMethod.DELETE)
     public void deleteProyectoAula(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @PathVariable int id){
         if(!validaToken(token)){
             response.setStatus(HttpStatus.FORBIDDEN.value());
-        }else {
+        }else if(proyectoAulaDao.getProyectoAula(id) == null) {
+
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }else{
             proyectoAulaDao.deleteProyectoAula(id);
         }
     }
@@ -53,7 +60,10 @@ public class ProyectoAulaController {
     public void updateProyectoAula(@RequestHeader(value = "Authorization") String token, HttpServletResponse response,@RequestBody ProyectoAula proyectoAula,@PathVariable int id){
         if(!validaToken(token)){
             response.setStatus(HttpStatus.FORBIDDEN.value());
-        }else {
+        }else if(proyectoAulaDao.getProyectoAula(id) == null) {
+
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }else{
             proyectoAulaDao.updateProyectoAula(proyectoAula, id);
         }
     }

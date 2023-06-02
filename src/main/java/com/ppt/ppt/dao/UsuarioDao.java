@@ -12,7 +12,7 @@ public interface UsuarioDao {
 
     void createUsuario(Usuario usuario, Set<UsuarioRol> ur);
 
-    void updateUsuario(Usuario usuario, String id);
+    void updateUsuario(Usuario usuario, int id);
 
     Usuario obtenerUsuarioPorCredenciales(Usuario usuario);
 

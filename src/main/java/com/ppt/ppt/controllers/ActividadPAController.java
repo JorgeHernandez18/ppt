@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/apa")
+@RequestMapping("apa")
 public class ActividadPAController {
 
     @Autowired
@@ -42,28 +42,37 @@ public class ActividadPAController {
     @RequestMapping(value = "api/actividadpa", method = RequestMethod.GET)
     public List<ActividadPA> getActividadPA(){ return actividadPADao.getActividadPA();}
 
-    //Funciona correctamente, sin validación de id
+    //Funciona correctamente, con validación de id
     @RequestMapping(value = "api/actividadpa/{id}", method = RequestMethod.GET)
-    public ActividadPA getActividadPA(@PathVariable int id){
+    public ActividadPA getActividadPA(@PathVariable int id, HttpServletResponse response){
+
+        if(actividadPADao.getActividadPA(id) == null){
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
         return actividadPADao.getActividadPA(id);
     }
 
-    //Funciona, aplicar excepcion para id no existente
+    //Funciona, aplicación de excepcion para id no existente
     @RequestMapping(value = "api/actividadpa/{id}", method = RequestMethod.DELETE)
     public void deleteActividadPA(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @PathVariable int id){
         if (!validaToken(token)){
             response.setStatus(HttpStatus.FORBIDDEN.value());
+        }else if(actividadPADao.getActividadPA(id) == null) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
         }else{
             actividadPADao.deleteActividadPA(id);
         }
     }
 
-    //Funciona, aplicar excepcion para id no existente
+    //Funciona, aplicación de excepcion para id no existente
     @RequestMapping(value = "api/actividadpa/{id}", method = RequestMethod.PUT)
     public void updateActividadPA(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @RequestBody ActividadPA actividadPA, @PathVariable int id){
         if(!validaToken(token)){
             response.setStatus(HttpStatus.FORBIDDEN.value());
-        }else {
+        }else if(actividadPADao.getActividadPAByIdPA(id) == null) {
+
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }else{
             actividadPADao.updateActividadPA(actividadPA, id);
         }
     }

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 @RestController
-@RequestMapping("/usuario")
+@RequestMapping("usuario")
 public class UsuarioController {
 
     /*He decidido usar estos 3 metodos ya que servirá para ver los datos en "mi perfil" y poder actualizarlos o cambiarlos*/
@@ -62,11 +62,11 @@ public class UsuarioController {
 
     //Funcionando correctamente
     @RequestMapping(value = "api/usuario/{id}", method = RequestMethod.PUT)
-    public void updateUsuario(@RequestHeader(value = "Authorization") String token, @RequestBody Usuario usuario, @PathVariable String id) {
+    public void updateUsuario(@RequestHeader(value = "Authorization") String token, @RequestBody Usuario usuario, @PathVariable int id, HttpServletResponse response) {
 
         String idUsuario = jwtUtil.getKey(token);
         if(idUsuario == null){
-            return;
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
         }else {
             convertirPassword(usuario);
             usuarioDao.updateUsuario(usuario, id);
