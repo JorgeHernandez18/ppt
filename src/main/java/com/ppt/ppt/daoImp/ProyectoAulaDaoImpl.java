@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -61,6 +62,22 @@ public class ProyectoAulaDaoImpl implements ProyectoAulaDao {
 
     @Override
     public void cargarActividades(ActividadPA actividad) {
+        ProyectoAula pa = entityManager.find(ProyectoAula.class, actividad.getPa().getId());
 
+        pa.setActividades((Set<ActividadPA>) actividad);
+    }
+
+    @Override
+    public List<ActividadPA> listarActividadesDeCadaProyecto(int id) {
+        ProyectoAula pa = entityManager.find(ProyectoAula.class, id);
+        Set<ActividadPA> actividades = pa.getActividades();
+        List<ActividadPA> actividadesPA= new ArrayList<>();
+        for(ActividadPA a: actividades){
+            if(pa.getId() == a.getPa().getId())
+            {
+                actividadesPA.add(a);
+            }
+        }
+        return actividadesPA;
     }
 }

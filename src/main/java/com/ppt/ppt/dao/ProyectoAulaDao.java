@@ -18,4 +18,6 @@ public interface ProyectoAulaDao {
     void createProyectoAula(ProyectoAula proyectoAula);
 
     void cargarActividades(ActividadPA actividad);
+
+    List<ActividadPA> listarActividadesDeCadaProyecto(int id);
 }

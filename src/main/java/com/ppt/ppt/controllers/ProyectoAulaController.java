@@ -78,6 +78,15 @@ public class ProyectoAulaController {
         }
     }
 
+    //Lista las actividades de un proyecto de aula en especifico controlada por el id del proyecto de aula
+    @RequestMapping(value = "api/actividadespa/{id}", method = RequestMethod.GET)
+    public List<ActividadPA> listarActividadesDeCadaProyecto(int id, HttpServletResponse response){
+        if(proyectoAulaDao.getProyectoAula(id) == null){
+            response.setStatus(HttpStatus.FORBIDDEN.value());
+        }
+        return proyectoAulaDao.listarActividadesDeCadaProyecto(id);
+    }
+
     private boolean validaToken(String token){
         System.out.println(jwtUtil.getKey(token));
         int userId = Integer.parseInt(jwtUtil.getKey(token));

@@ -100,6 +100,7 @@ public class ActividadPAController {
             ProyectoAula proyect = proyectoAulaDao.getProyectoAula(idPA);
             actividadPA.setPa(proyect);
 
+            proyectoAulaDao.cargarActividades(actividadPA);
             actividadPADao.createActividadPA(actividadPA, ea);
         }
     }
