@@ -82,7 +82,7 @@ public class ProyectoAulaController {
     @RequestMapping(value = "api/actividadespa/{id}", method = RequestMethod.GET)
     public List<ActividadPA> listarActividadesDeCadaProyecto(int id, HttpServletResponse response){
         if(proyectoAulaDao.getProyectoAula(id) == null){
-            response.setStatus(HttpStatus.FORBIDDEN.value());
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
         }
         return proyectoAulaDao.listarActividadesDeCadaProyecto(id);
     }
