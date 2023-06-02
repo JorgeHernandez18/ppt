@@ -8,6 +8,8 @@ import java.util.Set;
 
 public interface UsuarioDao {
 
+    List<Usuario> getUsuarios();
+
     Usuario getUsuario(String correo) throws Exception;
 
     void createUsuario(Usuario usuario, Set<UsuarioRol> ur);

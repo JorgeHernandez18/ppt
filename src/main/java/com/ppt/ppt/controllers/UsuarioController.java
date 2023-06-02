@@ -26,6 +26,11 @@ public class UsuarioController {
     @Autowired
     private JWTUtil jwtUtil;
 
+    @RequestMapping(value = "api/usuarios", method = RequestMethod.GET)
+    public List<Usuario> getUsuarios() {
+        return usuarioDao.getUsuarios();
+    }
+
     //Testeado y funcionando correctamente
     @RequestMapping(value = "api/usuario/{correo}", method = RequestMethod.GET)
     public Usuario getUsuario(@PathVariable String correo, HttpServletResponse response) throws Exception {
