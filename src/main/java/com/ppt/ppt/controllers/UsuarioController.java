@@ -5,7 +5,9 @@ import com.ppt.ppt.models.*;
 import com.ppt.ppt.utils.JWTUtil;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -26,16 +28,19 @@ public class UsuarioController {
 
     //Testeado y funcionando correctamente
     @RequestMapping(value = "api/usuario/{correo}", method = RequestMethod.GET)
-    public Usuario getUsuario(@PathVariable String correo) throws Exception {
-        return usuarioDao.getUsuario(correo);
+    public Usuario getUsuario(@PathVariable String correo, HttpServletResponse response) throws Exception {
+        if(usuarioDao.getUsuario(correo) == null){
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+            return usuarioDao.getUsuario(correo);
     }
 
     //Metodo usado para registrar un usuario
     @RequestMapping(value = "api/usuario/{rol}", method = RequestMethod.POST)
-    public void createUsuario(@RequestBody Usuario usuario, @PathVariable int rol) throws Exception {
+    public void createUsuario(@RequestBody Usuario usuario, @PathVariable int rol, HttpServletResponse response) throws Exception {
         Usuario u = usuarioDao.getUsuario(usuario.getCorreo_electronico());
         if (u != null) {
-            throw new Exception("Email de usuario existente");
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
         } else {
 
             Set<UsuarioRol> ur = new HashSet<>();
