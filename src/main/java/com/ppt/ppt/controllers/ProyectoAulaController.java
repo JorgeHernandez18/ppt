@@ -55,7 +55,7 @@ public class ProyectoAulaController {
         }
     }
 
-    //Funciona correctamente, sin control de id
+    //Funciona correctamente, con control de id
     @RequestMapping(value = "api/proyectoaula/{id}", method = RequestMethod.PUT)
     public void updateProyectoAula(@RequestHeader(value = "Authorization") String token, HttpServletResponse response,@RequestBody ProyectoAula proyectoAula,@PathVariable int id){
         if(!validaToken(token)){
