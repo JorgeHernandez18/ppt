@@ -2,7 +2,9 @@ package com.ppt.ppt.controllers;
 
 import com.ppt.ppt.dao.EjeTransversalDao;
 import com.ppt.ppt.models.EjeTransversal;
+import com.ppt.ppt.models.Estudiante;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,5 +19,5 @@ public class EjeTransversalController {
     private EjeTransversalDao ejeTransversalDao;
 
     @RequestMapping(value = "api/eje", method = RequestMethod.GET)
-    public List<EjeTransversal> getEjeTransversal(){ return ejeTransversalDao.getEjeTransversal();}
+    public ResponseEntity<List<EjeTransversal>>  getEjeTransversal(){ return ResponseEntity.ok(ejeTransversalDao.getEjeTransversal());}
 }
