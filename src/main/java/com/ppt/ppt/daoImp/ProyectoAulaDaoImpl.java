@@ -1,9 +1,7 @@
 package com.ppt.ppt.daoImp;
 
 import com.ppt.ppt.dao.ProyectoAulaDao;
-import com.ppt.ppt.models.ActividadPA;
-import com.ppt.ppt.models.ProyectoAula;
-import com.ppt.ppt.models.UsuarioRol;
+import com.ppt.ppt.models.*;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.context.annotation.Primary;
@@ -65,6 +63,16 @@ public class ProyectoAulaDaoImpl implements ProyectoAulaDao {
         ProyectoAula pa = entityManager.find(ProyectoAula.class, actividad.getPa().getId());
 
         pa.setActividades((Set<ActividadPA>) actividad);
+    }
+
+    @Override
+    public void eliminarActividades(ActividadPA actividad) {
+        ProyectoAula pa = entityManager.find(ProyectoAula.class, actividad.getPa().getId());
+
+        for(ActividadPA a: pa.getActividades()){
+            if(actividad.getId() == a.getId())
+                pa.getActividades().remove(a);
+        }
     }
 
     @Override

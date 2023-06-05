@@ -62,6 +62,17 @@ public class PlanTrabajoDaoImp implements PlanTrabajoDao {
     }
 
     @Override
+    public void eliminarActividades(ActividadPT actividad) {
+        PlanTrabajo pt = entityManager.find(PlanTrabajo.class, actividad.getPt().getId());
+
+        for(ActividadPT a: pt.getActividades()){
+            if(actividad.getId() == a.getId())
+                pt.getActividades().remove(a);
+        }
+    }
+
+
+    @Override
     public List<ActividadPT> listarActividadesDeCadaPlan(int id) {
         PlanTrabajo pt = entityManager.find(PlanTrabajo.class, id);
         Set<ActividadPT> actividades = pt.getActividades();

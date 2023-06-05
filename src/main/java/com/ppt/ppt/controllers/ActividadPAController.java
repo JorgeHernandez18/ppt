@@ -4,14 +4,14 @@ import com.ppt.ppt.dao.ActividadPADao;
 import com.ppt.ppt.dao.EstudianteDao;
 import com.ppt.ppt.dao.ProyectoAulaDao;
 import com.ppt.ppt.dao.UsuarioDao;
-import com.ppt.ppt.models.ActividadPA;
-import com.ppt.ppt.models.Estudiante;
-import com.ppt.ppt.models.Estudiante_Apoyo;
-import com.ppt.ppt.models.ProyectoAula;
+import com.ppt.ppt.models.*;
 import com.ppt.ppt.utils.JWTUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -40,27 +40,28 @@ public class ActividadPAController {
 
     //Funciona correctamente
     @RequestMapping(value = "api/actividadpa", method = RequestMethod.GET)
-    public List<ActividadPA> getActividadPA(){ return actividadPADao.getActividadPA();}
+    public ResponseEntity<List<ActividadPA>> getActividadPA(){ return ResponseEntity.ok(actividadPADao.getActividadPA());}
 
     //Funciona correctamente, con validación de id
     @RequestMapping(value = "api/actividadpa/{id}", method = RequestMethod.GET)
-    public ActividadPA getActividadPA(@PathVariable int id, HttpServletResponse response){
+    public ResponseEntity<ActividadPA>  getActividadPA(@PathVariable int id){
 
         if(actividadPADao.getActividadPA(id) == null){
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            throw new ErrorResponseException(HttpStatusCode.valueOf(404), new Exception("Actividad no existente"));
         }
-        return actividadPADao.getActividadPA(id);
+        return ResponseEntity.ok(actividadPADao.getActividadPA(id));
     }
 
     //Funciona, aplicación de excepcion para id no existente
     @RequestMapping(value = "api/actividadpa/{id}", method = RequestMethod.DELETE)
-    public void deleteActividadPA(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @PathVariable int id){
+    public void deleteActividadPA(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @RequestBody ActividadPA actividadPA){
         if (!validaToken(token)){
-            response.setStatus(HttpStatus.FORBIDDEN.value());
-        }else if(actividadPADao.getActividadPA(id) == null) {
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            new ErrorResponseException(HttpStatusCode.valueOf(401), new Exception("El usuario no es docente lider"));
+        }else if(actividadPADao.getActividadPA(actividadPA.getId()) == null) {
+            throw new ErrorResponseException(HttpStatusCode.valueOf(404), new Exception("Actividad no existente"));
         }else{
-            actividadPADao.deleteActividadPA(id);
+            proyectoAulaDao.eliminarActividades(actividadPA);
+            actividadPADao.deleteActividadPA(actividadPA.getId());
         }
     }
 
@@ -68,10 +69,9 @@ public class ActividadPAController {
     @RequestMapping(value = "api/actividadpa/{id}", method = RequestMethod.PUT)
     public void updateActividadPA(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @RequestBody ActividadPA actividadPA, @PathVariable int id){
         if(!validaToken(token)){
-            response.setStatus(HttpStatus.FORBIDDEN.value());
+            new ErrorResponseException(HttpStatusCode.valueOf(401), new Exception("El usuario no es docente lider"));
         }else if(actividadPADao.getActividadPAByIdPA(id) == null) {
-
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            throw new ErrorResponseException(HttpStatusCode.valueOf(404), new Exception("Actividad no existente"));
         }else{
             actividadPADao.updateActividadPA(actividadPA, id);
         }
@@ -79,9 +79,9 @@ public class ActividadPAController {
 
     //Funcionando correctamente
     @RequestMapping(value = "api/actividadpa/{idPA}", method = RequestMethod.POST)
-    public void createActividadPA(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @RequestBody ActividadPA actividadPA, @RequestBody List<Integer> estudiantes, @PathVariable int idPA) {
+    public void createActividadPA(@RequestHeader(value = "Authorization") String token, @RequestBody ActividadPA actividadPA, @RequestBody List<Integer> estudiantes, @PathVariable int idPA) {
         if(!validaToken(token)){
-            response.setStatus(HttpStatus.FORBIDDEN.value());
+            new ErrorResponseException(HttpStatusCode.valueOf(401), new Exception("El usuario no es docente lider"));
         }else {
             List<Estudiante> e = new ArrayList<>();
             for(Integer i: estudiantes){

@@ -19,5 +19,7 @@ public interface PlanTrabajoDao {
 
     void cargarActividades(ActividadPT actividad);
 
+    void eliminarActividades(ActividadPT actividad);
+
     List<ActividadPT> listarActividadesDeCadaPlan(int id);
 }

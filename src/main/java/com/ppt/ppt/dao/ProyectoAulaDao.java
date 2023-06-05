@@ -1,6 +1,7 @@
 package com.ppt.ppt.dao;
 
 import com.ppt.ppt.models.ActividadPA;
+import com.ppt.ppt.models.ActividadPT;
 import com.ppt.ppt.models.ProyectoAula;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public interface ProyectoAulaDao {
     void createProyectoAula(ProyectoAula proyectoAula);
 
     void cargarActividades(ActividadPA actividad);
+
+    void eliminarActividades(ActividadPA actividad);
 
     List<ActividadPA> listarActividadesDeCadaProyecto(int id);
 }
