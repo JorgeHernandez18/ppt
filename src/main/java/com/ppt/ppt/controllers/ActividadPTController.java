@@ -37,7 +37,6 @@ public class ActividadPTController {
         }
     }
 
-    //Funciona correctamente
     @RequestMapping(value = "api/actividadpt/{id}", method = RequestMethod.DELETE)
     public void deleteActividadPT(@RequestBody ActividadPT actividadPT){
         if (actividadPTDao.getActividadPT(actividadPT.getId()) == null) {
