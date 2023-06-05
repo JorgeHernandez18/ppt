@@ -7,8 +7,9 @@ import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -28,25 +29,25 @@ public class UsuarioController {
     private JWTUtil jwtUtil;
 
     @RequestMapping(value = "api/usuarios", method = RequestMethod.GET)
-    public List<Usuario> getUsuarios() {
-        return usuarioDao.getUsuarios();
+    public ResponseEntity<List<Usuario>> getUsuarios() {
+        return ResponseEntity.ok(usuarioDao.getUsuarios());
     }
 
     //Testeado y funcionando correctamente
     @RequestMapping(value = "api/usuario/{correo}", method = RequestMethod.GET)
-    public Usuario getUsuario(@PathVariable String correo, HttpServletResponse response) throws Exception {
+    public ResponseEntity<Usuario> getUsuario(@PathVariable String correo) throws Exception {
         if(usuarioDao.getUsuario(correo) == null){
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            throw new ErrorResponseException(HttpStatusCode.valueOf(404), new Exception("Usuario no existente"));
         }
-            return usuarioDao.getUsuario(correo);
+            return ResponseEntity.ok(usuarioDao.getUsuario(correo));
     }
 
     //Metodo usado para registrar un usuario
     @RequestMapping(value = "api/usuario/{rol}", method = RequestMethod.POST)
-    public void createUsuario(@RequestBody Usuario usuario, @PathVariable int rol, HttpServletResponse response) throws Exception {
+    public void createUsuario(@RequestBody Usuario usuario, @PathVariable int rol) throws Exception {
         Usuario u = usuarioDao.getUsuario(usuario.getCorreo_electronico());
         if (u != null) {
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            throw new ErrorResponseException(HttpStatusCode.valueOf(400), new Exception("Usuario existente"));
         } else {
 
             Set<UsuarioRol> ur = new HashSet<>();
@@ -72,7 +73,7 @@ public class UsuarioController {
 
         String idUsuario = jwtUtil.getKey(token);
         if(idUsuario == null){
-            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            throw new ErrorResponseException(HttpStatusCode.valueOf(404), new Exception("Usuario no existente"));
         }else {
             convertirPassword(usuario);
             usuarioDao.updateUsuario(usuario, id);
@@ -81,11 +82,11 @@ public class UsuarioController {
 
     //Funcionando correctamente
     @RequestMapping(value = "api/docentes_apoyo", method = RequestMethod.GET)
-    public List<Usuario> docentesApoyo() throws Exception {return usuarioDao.docentesApoyo();}
+    public ResponseEntity<List<Usuario>> docentesApoyo() throws Exception {return ResponseEntity.ok(usuarioDao.docentesApoyo());}
 
     //Funcionando correctamente
     @RequestMapping(value = "api/docentes_lider", method = RequestMethod.GET)
-    public List<Usuario> docentesLider() throws Exception {return usuarioDao.docentesLider();}
+    public ResponseEntity<List<Usuario>> docentesLider() throws Exception {return ResponseEntity.ok(usuarioDao.docentesLider());}
 
     @RequestMapping(value = "api/es_docente/{id}", method = RequestMethod.GET)
     public boolean esDocente(@PathVariable int id){return usuarioDao.esDocente(id);}
