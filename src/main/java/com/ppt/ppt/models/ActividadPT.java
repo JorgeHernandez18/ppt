@@ -32,7 +32,7 @@ public class ActividadPT {
     @Column(name = "observacion")
     private String observacion;
 
-    //Buscar plan de trabajo por id
-    @Column(name = "plan_trabajo")
-    private int plan_trabajo;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_plantrabajo")
+    private PlanTrabajo pt;
 }

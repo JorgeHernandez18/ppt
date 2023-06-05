@@ -7,6 +7,8 @@ import com.ppt.ppt.utils.JWTUtil;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.web.ErrorResponseException;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,9 +72,9 @@ public class ProyectoAulaController {
 
     //Funciona correctamente
     @RequestMapping(value = "api/proyectoaula", method = RequestMethod.POST)
-    public void createProyectoAula(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @RequestBody ProyectoAula proyectoAula) {
+    public void createProyectoAula(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @RequestBody ProyectoAula proyectoAula) throws Exception {
         if (!validaToken(token)) {
-            response.setStatus(HttpStatus.FORBIDDEN.value());
+            new ErrorResponseException(HttpStatusCode.valueOf(401), new Exception("El usuario no es docente lider"));
         } else {
                 proyectoAulaDao.createProyectoAula(proyectoAula);
         }

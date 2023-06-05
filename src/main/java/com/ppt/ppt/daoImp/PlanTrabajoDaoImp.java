@@ -1,13 +1,17 @@
 package com.ppt.ppt.daoImp;
 
 import com.ppt.ppt.dao.PlanTrabajoDao;
+import com.ppt.ppt.models.ActividadPA;
+import com.ppt.ppt.models.ActividadPT;
 import com.ppt.ppt.models.PlanTrabajo;
+import com.ppt.ppt.models.ProyectoAula;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional
@@ -47,5 +51,12 @@ public class PlanTrabajoDaoImp implements PlanTrabajoDao {
     @Override
     public void createPlanTrabajo(PlanTrabajo planTrabajo) {
         entityManager.merge(planTrabajo);
+    }
+
+    @Override
+    public void cargarActividades(ActividadPT actividad) {
+        PlanTrabajo pt = entityManager.find(PlanTrabajo.class, actividad.getPt().getId());
+
+        pt.setActividades((Set<ActividadPT>) actividad);
     }
 }

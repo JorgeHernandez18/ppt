@@ -1,5 +1,6 @@
 package com.ppt.ppt.dao;
 
+import com.ppt.ppt.models.ActividadPT;
 import com.ppt.ppt.models.PlanTrabajo;
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface PlanTrabajoDao {
     void updatePlanTrabajo(PlanTrabajo planTrabajo, int id);
 
     void createPlanTrabajo(PlanTrabajo planTrabajo);
+
+    void cargarActividades(ActividadPT actividad);
 }

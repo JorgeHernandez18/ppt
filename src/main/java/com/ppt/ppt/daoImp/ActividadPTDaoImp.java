@@ -45,7 +45,7 @@ public class ActividadPTDaoImp implements ActividadPTDao {
         apt.setDocente_apoyo(actividadPT.getDocente_apoyo());
         apt.setCumplimiento(actividadPT.getCumplimiento());
         apt.setObservacion(actividadPT.getObservacion());
-        apt.setPlan_trabajo(actividadPT.getPlan_trabajo());
+        apt.setPt(actividadPT.getPt());
 
         entityManager.merge(apt);
     }

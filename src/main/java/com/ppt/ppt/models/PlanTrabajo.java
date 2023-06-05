@@ -1,7 +1,13 @@
 package com.ppt.ppt.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Entity
@@ -25,4 +31,10 @@ public class PlanTrabajo {
 
     @Column(name = "cierre")
     private String cierre;
+
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "pt")
+    private Set<ActividadPT> actividades = new HashSet<>();
 }
