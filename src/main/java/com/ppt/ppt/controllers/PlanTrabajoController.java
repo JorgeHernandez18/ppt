@@ -1,6 +1,7 @@
 package com.ppt.ppt.controllers;
 
 import com.ppt.ppt.dao.PlanTrabajoDao;
+import com.ppt.ppt.models.ActividadPT;
 import com.ppt.ppt.models.PlanTrabajo;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +53,14 @@ public class PlanTrabajoController {
     @RequestMapping(value = "api/plantrabajo", method = RequestMethod.POST)
     public void createPlanTrabajo(@RequestBody PlanTrabajo planTrabajo){
         planTrabajoDao.createPlanTrabajo(planTrabajo);
+    }
+
+    @RequestMapping(value = "api/actividadespt/{id}", method = RequestMethod.GET)
+    public List<ActividadPT> listarActividadesDeCadaPlan(int id, HttpServletResponse response){
+        if(planTrabajoDao.getPlanTrabajo(id) == null){
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+        }
+        return planTrabajoDao.listarActividadesDeCadaPlan(id);
     }
 
 }

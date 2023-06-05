@@ -10,6 +10,7 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -58,5 +59,19 @@ public class PlanTrabajoDaoImp implements PlanTrabajoDao {
         PlanTrabajo pt = entityManager.find(PlanTrabajo.class, actividad.getPt().getId());
 
         pt.setActividades((Set<ActividadPT>) actividad);
+    }
+
+    @Override
+    public List<ActividadPT> listarActividadesDeCadaPlan(int id) {
+        PlanTrabajo pt = entityManager.find(PlanTrabajo.class, id);
+        Set<ActividadPT> actividades = pt.getActividades();
+        List<ActividadPT> actividadesPT= new ArrayList<>();
+        for(ActividadPT a: actividades){
+            if(pt.getId() == a.getPt().getId())
+            {
+                actividadesPT.add(a);
+            }
+        }
+        return actividadesPT;
     }
 }
