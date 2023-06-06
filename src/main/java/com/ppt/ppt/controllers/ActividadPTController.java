@@ -50,11 +50,7 @@ public class ActividadPTController {
 
     //Funciona correctamente
     @RequestMapping(value = "api/actividadpt", method = RequestMethod.POST)
-    public void createActividadPT(@RequestBody ActividadPT actividadPT, @PathVariable int idPT) {
-        PlanTrabajo pt = planTrabajoDao.getPlanTrabajo(idPT);
-        actividadPT.setPt(pt);
-
-        planTrabajoDao.cargarActividades(actividadPT);
+    public void createProyectoAula(@RequestBody ActividadPT actividadPT) {
         actividadPTDao.createActividadPT(actividadPT);
     }
 
