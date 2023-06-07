@@ -73,7 +73,7 @@ public class PlanTrabajoDaoImp implements PlanTrabajoDao {
 
 
     @Override
-    public List<ActividadPT> listarActividadesDeCadaPlan(int id) {
+    public List<ActividadPT> listarActividadesDeCadaPlan(Integer id) {
         PlanTrabajo pt = entityManager.find(PlanTrabajo.class, id);
         Set<ActividadPT> actividades = pt.getActividades();
         List<ActividadPT> actividadesPT= new ArrayList<>();

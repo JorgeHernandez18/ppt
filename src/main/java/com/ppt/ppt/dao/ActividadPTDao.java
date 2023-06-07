@@ -8,11 +8,11 @@ public interface ActividadPTDao {
 
     List<ActividadPT> getActividadPT();
 
-    ActividadPT getActividadPT(int id);
+    ActividadPT getActividadPT(Integer id);
 
     void deleteActividadPT(int id);
 
     void updateActividadPT(ActividadPT actividadPT, int id);
 
-    void createActividadPT(ActividadPT actividadPT);
+    void createActividadPT(ActividadPT actividadPT, Integer id);
 }

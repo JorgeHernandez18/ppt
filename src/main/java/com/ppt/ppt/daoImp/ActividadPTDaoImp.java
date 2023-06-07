@@ -1,7 +1,9 @@
 package com.ppt.ppt.daoImp;
 
 import com.ppt.ppt.dao.ActividadPTDao;
+import com.ppt.ppt.dao.PlanTrabajoDao;
 import com.ppt.ppt.models.ActividadPT;
+import com.ppt.ppt.models.PlanTrabajo;
 import com.ppt.ppt.models.Usuario;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -17,7 +19,6 @@ public class ActividadPTDaoImp implements ActividadPTDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-
     @Override
     @Transactional
     public List<ActividadPT> getActividadPT() {
@@ -26,7 +27,7 @@ public class ActividadPTDaoImp implements ActividadPTDao {
     }
 
     @Override
-    public ActividadPT getActividadPT(int id) {
+    public ActividadPT getActividadPT(Integer id) {
         return entityManager.find(ActividadPT.class, id);
     }
 
@@ -51,6 +52,11 @@ public class ActividadPTDaoImp implements ActividadPTDao {
     }
 
     @Override
-    public void createActividadPT(ActividadPT actividadPT) {entityManager.merge(actividadPT);}
+    public void createActividadPT(ActividadPT actividadPT, Integer id) {
+        PlanTrabajo pt = entityManager.find(PlanTrabajo.class, id);
+        actividadPT.setPt(pt);
+
+        entityManager.merge(actividadPT);
+    }
 
 }

@@ -3,10 +3,7 @@ package com.ppt.ppt.controllers;
 import com.ppt.ppt.dao.PlanTrabajoDao;
 import com.ppt.ppt.models.ActividadPT;
 import com.ppt.ppt.models.PlanTrabajo;
-import com.ppt.ppt.models.Token;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponseException;
@@ -60,7 +57,7 @@ public class PlanTrabajoController {
     }
 
     @RequestMapping(value = "api/actividadespt/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<ActividadPT>>  listarActividadesDeCadaPlan(int id){
+    public ResponseEntity<List<ActividadPT>>  listarActividadesDeCadaPlan(@PathVariable Integer id){
         if(planTrabajoDao.getPlanTrabajo(id) == null){
             throw new ErrorResponseException(HttpStatusCode.valueOf(404), new Exception("Plan de trabajo no existente"));
         }

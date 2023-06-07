@@ -49,9 +49,9 @@ public class ActividadPTController {
     }
 
     //Funciona correctamente
-    @RequestMapping(value = "api/actividadpt", method = RequestMethod.POST)
-    public void createProyectoAula(@RequestBody ActividadPT actividadPT) {
-        actividadPTDao.createActividadPT(actividadPT);
+    @RequestMapping(value = "api/actividadpt/{id}", method = RequestMethod.POST)
+    public void createProyectoAula(@RequestBody ActividadPT actividadPT, @PathVariable Integer id) {
+        actividadPTDao.createActividadPT(actividadPT, id);
     }
 
     //Funciona correctamente
@@ -62,8 +62,5 @@ public class ActividadPTController {
         } else {
             actividadPTDao.updateActividadPT(actividadPT,id);
         }
-
     }
-
-
 }

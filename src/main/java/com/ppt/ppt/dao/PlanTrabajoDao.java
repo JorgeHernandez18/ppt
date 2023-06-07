@@ -21,5 +21,5 @@ public interface PlanTrabajoDao {
 
     void eliminarActividades(ActividadPT actividad);
 
-    List<ActividadPT> listarActividadesDeCadaPlan(int id);
+    List<ActividadPT> listarActividadesDeCadaPlan(Integer id);
 }
