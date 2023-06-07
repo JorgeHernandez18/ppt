@@ -18,7 +18,7 @@ public interface ActividadPADao {
 
     void updateActividadPA(ActividadPA actividadPA, int id);
 
-    void createActividadPA(ActividadPA actividadPA, Set<Estudiante_Apoyo> ea);
+    void createActividadPA(ActividadPA actividadPA, Set<Estudiante_Apoyo> ea, Integer id);
 
 
 }

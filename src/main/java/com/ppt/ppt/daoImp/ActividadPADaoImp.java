@@ -77,8 +77,10 @@ public class ActividadPADaoImp implements ActividadPADao {
     }
 
     @Override
-    public void createActividadPA(ActividadPA actividadPA, Set<Estudiante_Apoyo> ea) {
+    public void createActividadPA(ActividadPA actividadPA, Set<Estudiante_Apoyo> ea, Integer id) {
 
+        ProyectoAula pa = entityManager.find(ProyectoAula.class, id);
+        actividadPA.setPa(pa);
         for (Estudiante_Apoyo estudiante_apoyo: ea){
             entityManager.merge(estudiante_apoyo.getEstudiante());
         }

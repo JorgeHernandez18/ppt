@@ -79,7 +79,7 @@ public class ActividadPAController {
 
     //Funcionando correctamente
     @RequestMapping(value = "api/actividadpa/{idPA}", method = RequestMethod.POST)
-    public void createActividadPA(@RequestHeader(value = "Authorization") String token, @RequestBody ActividadPA actividadPA, @RequestBody List<Integer> estudiantes, @PathVariable int idPA) {
+    public void createActividadPA(@RequestHeader(value = "Authorization") String token, @RequestBody ActividadPA actividadPA, @RequestBody List<Integer> estudiantes, @PathVariable Integer idPA) {
         if(!validaToken(token)){
             new ErrorResponseException(HttpStatusCode.valueOf(401), new Exception("El usuario no es docente lider"));
         }else {
@@ -96,12 +96,8 @@ public class ActividadPAController {
                 estudiante_apoyo.setActividadPA(actividadPA);
                 ea.add(estudiante_apoyo);
             }
-            //Buscar Pa por id
-            ProyectoAula proyect = proyectoAulaDao.getProyectoAula(idPA);
-            actividadPA.setPa(proyect);
 
-            proyectoAulaDao.cargarActividades(actividadPA);
-            actividadPADao.createActividadPA(actividadPA, ea);
+            actividadPADao.createActividadPA(actividadPA, ea, idPA);
         }
     }
 
