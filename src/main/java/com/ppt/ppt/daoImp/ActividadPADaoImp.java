@@ -81,6 +81,8 @@ public class ActividadPADaoImp implements ActividadPADao {
 
         ProyectoAula pa = entityManager.find(ProyectoAula.class, id);
         actividadPA.setPa(pa);
+        pa.getActividades().add(actividadPA);
+
         for (Estudiante_Apoyo estudiante_apoyo: ea){
             entityManager.merge(estudiante_apoyo.getEstudiante());
         }

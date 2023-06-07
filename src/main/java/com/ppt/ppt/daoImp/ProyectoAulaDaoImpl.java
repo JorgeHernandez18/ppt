@@ -76,7 +76,7 @@ public class ProyectoAulaDaoImpl implements ProyectoAulaDao {
     }
 
     @Override
-    public List<ActividadPA> listarActividadesDeCadaProyecto(int id) {
+    public List<ActividadPA> listarActividadesDeCadaProyecto(Integer id) {
         ProyectoAula pa = entityManager.find(ProyectoAula.class, id);
         Set<ActividadPA> actividades = pa.getActividades();
         List<ActividadPA> actividadesPA= new ArrayList<>();

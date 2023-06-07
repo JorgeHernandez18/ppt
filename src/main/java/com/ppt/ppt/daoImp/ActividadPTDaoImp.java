@@ -56,6 +56,8 @@ public class ActividadPTDaoImp implements ActividadPTDao {
         PlanTrabajo pt = entityManager.find(PlanTrabajo.class, id);
         actividadPT.setPt(pt);
 
+        pt.getActividades().add(actividadPT);
+
         entityManager.merge(actividadPT);
     }
 

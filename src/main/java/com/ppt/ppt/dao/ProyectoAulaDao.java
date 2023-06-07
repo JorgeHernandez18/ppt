@@ -22,5 +22,5 @@ public interface ProyectoAulaDao {
 
     void eliminarActividades(ActividadPA actividad);
 
-    List<ActividadPA> listarActividadesDeCadaProyecto(int id);
+    List<ActividadPA> listarActividadesDeCadaProyecto(Integer id);
 }
