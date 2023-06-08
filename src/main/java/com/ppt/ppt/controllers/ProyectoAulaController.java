@@ -79,7 +79,7 @@ public class ProyectoAulaController {
 
     //Lista las actividades de un proyecto de aula en especifico controlada por el id del proyecto de aula
     @RequestMapping(value = "api/actividadespa/{id}", method = RequestMethod.GET)
-    public ResponseEntity<List<ActividadPA>>  listarActividadesDeCadaProyecto(Integer id){
+    public ResponseEntity<List<ActividadPA>>  listarActividadesDeCadaProyecto(@PathVariable Integer id){
         if(proyectoAulaDao.getProyectoAula(id) == null){
             throw new ErrorResponseException(HttpStatusCode.valueOf(404), new Exception("Proyecto de aula no existente"));
         }

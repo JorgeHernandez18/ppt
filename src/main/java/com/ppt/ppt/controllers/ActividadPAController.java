@@ -4,6 +4,7 @@ import com.ppt.ppt.dao.ActividadPADao;
 import com.ppt.ppt.dao.EstudianteDao;
 import com.ppt.ppt.dao.ProyectoAulaDao;
 import com.ppt.ppt.dao.UsuarioDao;
+import com.ppt.ppt.dto.CrearActividadPA;
 import com.ppt.ppt.models.*;
 import com.ppt.ppt.utils.JWTUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -79,12 +80,12 @@ public class ActividadPAController {
 
     //Funcionando correctamente
     @RequestMapping(value = "api/actividadpa/{idPA}", method = RequestMethod.POST)
-    public void createActividadPA(@RequestHeader(value = "Authorization") String token, @RequestBody ActividadPA actividadPA, @RequestBody List<Integer> estudiantes, @PathVariable Integer idPA) {
+    public void createActividadPA(@RequestHeader(value = "Authorization") String token, @RequestBody CrearActividadPA actividadDto, @PathVariable Integer idPA) {
         if(!validaToken(token)){
             new ErrorResponseException(HttpStatusCode.valueOf(401), new Exception("El usuario no es docente lider"));
         }else {
             List<Estudiante> e = new ArrayList<>();
-            for(Integer i: estudiantes){
+            for(Integer i: actividadDto.getEstudiantes()){
                 e.add(estudianteDao.getEstudianteById(i));
             }
 
@@ -93,11 +94,11 @@ public class ActividadPAController {
             for(Estudiante student: e) {
                 Estudiante_Apoyo estudiante_apoyo = new Estudiante_Apoyo();
                 estudiante_apoyo.setEstudiante(student);
-                estudiante_apoyo.setActividadPA(actividadPA);
+                estudiante_apoyo.setActividadPA(actividadDto.getActividadPA());
                 ea.add(estudiante_apoyo);
             }
 
-            actividadPADao.createActividadPA(actividadPA, ea, idPA);
+            actividadPADao.createActividadPA(actividadDto.getActividadPA(), ea, idPA);
         }
     }
 
