@@ -76,6 +76,11 @@ public class ActividadPADaoImp implements ActividadPADao {
         entityManager.merge(apa);
     }
 
+    /*
+    * Primero persistir ProyectoAula y luego persistir actividadPA para guardar los estudiantes_apoyo.
+    *
+    * Al crear la actividadPA o actividadPT, debo persistir o realizar el entityManager.merge(proyectoAula), entityManager.mergeplanTrabajo)
+    * */
     @Override
     public void createActividadPA(ActividadPA actividadPA, Set<Estudiante_Apoyo> ea, Integer id) {
 

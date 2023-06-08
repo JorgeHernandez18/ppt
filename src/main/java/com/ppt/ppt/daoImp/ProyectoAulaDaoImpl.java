@@ -62,7 +62,7 @@ public class ProyectoAulaDaoImpl implements ProyectoAulaDao {
     public void cargarActividades(ActividadPA actividad) {
         ProyectoAula pa = entityManager.find(ProyectoAula.class, actividad.getPa().getId());
 
-        pa.setActividades((Set<ActividadPA>) actividad);
+        pa.getActividades().add(actividad);
     }
 
     @Override
