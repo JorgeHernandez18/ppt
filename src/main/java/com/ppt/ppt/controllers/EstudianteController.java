@@ -3,6 +3,7 @@ package com.ppt.ppt.controllers;
 import com.ppt.ppt.dao.EstudianteDao;
 import com.ppt.ppt.models.Estudiante;
 import com.ppt.ppt.models.PlanTrabajo;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,9 @@ public class EstudianteController {
 
     //Funcionando correctamente
     @RequestMapping(value = "api/estudiante", method = RequestMethod.GET)
-    public ResponseEntity<List<Estudiante>>  getEstudiante(){ return ResponseEntity.ok(estudianteDao.getEstudiante());}
+    public ResponseEntity<List<Estudiante>>  getEstudiante(@Parameter String q){
+        return ResponseEntity.ok(estudianteDao.getEstudiantes(q));
+    }
 
     //Funcionando correctamente
     @RequestMapping(value = "api/estudiante", method = RequestMethod.POST)

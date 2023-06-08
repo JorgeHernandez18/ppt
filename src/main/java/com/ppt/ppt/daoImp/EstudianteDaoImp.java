@@ -5,9 +5,14 @@ import com.ppt.ppt.models.Estudiante;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
 import java.util.List;
 
 @Repository
@@ -19,9 +24,23 @@ public class EstudianteDaoImp implements EstudianteDao {
 
     @Override
     @Transactional
-    public List<Estudiante> getEstudiante() {
-        String query = "FROM Estudiante";
-        return entityManager.createQuery(query).getResultList();
+    public List<Estudiante> getEstudiantes(String q) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Estudiante> criteriaQuery = criteriaBuilder.createQuery(Estudiante.class);
+        Root<Estudiante> root = criteriaQuery.from(Estudiante.class);
+        criteriaQuery.select(root);
+
+        List<Estudiante> estudiantes = new LinkedList<>();
+
+        if (q != null && !q.equals("")) {
+            criteriaQuery.where(criteriaBuilder.like(root.get("codigo").as(String.class), "%" + q + "%"));
+
+            TypedQuery<Estudiante> query = entityManager.createQuery(criteriaQuery);
+
+            estudiantes = query.getResultList();
+        }
+
+        return estudiantes;
     }
 
     @Override

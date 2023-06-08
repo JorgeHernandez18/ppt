@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface EstudianteDao {
 
-    List<Estudiante> getEstudiante();
+    List<Estudiante> getEstudiantes(String q);
 
     Estudiante getEstudiante(String correo) throws Exception;
 
