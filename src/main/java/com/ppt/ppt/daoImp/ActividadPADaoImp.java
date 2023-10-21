@@ -79,21 +79,27 @@ public class ActividadPADaoImp implements ActividadPADao {
     /*
     * Primero persistir ProyectoAula y luego persistir actividadPA para guardar los estudiantes_apoyo.
     *
-    * Al crear la actividadPA o actividadPT, debo persistir o realizar el entityManager.merge(proyectoAula), entityManager.mergeplanTrabajo)
+    * Al crear la actividadPA o actividadPT, debo persistir o realizar el entityManager.merge(proyectoAula), entityManager.merge(planTrabajo)
     * */
     @Override
     public void createActividadPA(ActividadPA actividadPA, Set<Estudiante_Apoyo> ea, Integer id) {
 
         ProyectoAula pa = entityManager.find(ProyectoAula.class, id);
         actividadPA.setPa(pa);
-        pa.getActividades().add(actividadPA);
-
-        for (Estudiante_Apoyo estudiante_apoyo: ea){
-            entityManager.merge(estudiante_apoyo.getEstudiante());
-        }
         actividadPA.getEa().addAll(ea);
 
-        entityManager.merge(actividadPA);
+        /*
+        for (Estudiante_Apoyo estudiante_apoyo: ea){
+            actividadPA.getEa().add(estudiante_apoyo);
+        }
+        */
+
+        pa.getActividades().add(actividadPA);
+
+        //Esto realiza una actualización de Proyecto de Aula
+        //entityManager.merge(pa);
+
+        //entityManager.merge(actividadPA);
     }
 
 
