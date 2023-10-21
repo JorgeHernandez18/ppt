@@ -58,7 +58,7 @@ public class PlanTrabajoDaoImp implements PlanTrabajoDao {
     public void cargarActividades(ActividadPT actividad) {
         PlanTrabajo pt = entityManager.find(PlanTrabajo.class, actividad.getPt().getId());
 
-        pt.setActividades((Set<ActividadPT>) actividad);
+        pt.getActividades().add(actividad);
     }
 
     @Override

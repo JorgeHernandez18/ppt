@@ -97,7 +97,7 @@ public class ActividadPADaoImp implements ActividadPADao {
         pa.getActividades().add(actividadPA);
 
         //Esto realiza una actualización de Proyecto de Aula
-        //entityManager.merge(pa);
+        entityManager.merge(pa);
 
         //entityManager.merge(actividadPA);
     }

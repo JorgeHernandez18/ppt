@@ -58,7 +58,7 @@ public class ActividadPTDaoImp implements ActividadPTDao {
 
         //Ya se está guardando la actividad en la base de datos.
         pt.getActividades().add(actividadPT);
-
+        entityManager.merge(pt);
         //entityManager.merge(actividadPT);
     }
 
