@@ -5,7 +5,6 @@ import com.ppt.ppt.models.*;
 import com.ppt.ppt.utils.JWTUtil;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -69,7 +68,7 @@ public class UsuarioController {
 
     //Funcionando correctamente
     @RequestMapping(value = "api/usuario/{id}", method = RequestMethod.PUT)
-    public void updateUsuario(@RequestHeader(value = "Authorization") String token, @RequestBody Usuario usuario, @PathVariable int id, HttpServletResponse response) {
+    public void updateUsuario(@RequestHeader(value = "Authorization") String token, @RequestBody Usuario usuario, @PathVariable int id  ) {
 
         String idUsuario = jwtUtil.getKey(token);
         if(idUsuario == null){

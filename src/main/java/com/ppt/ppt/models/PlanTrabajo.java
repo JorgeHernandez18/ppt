@@ -26,9 +26,6 @@ public class PlanTrabajo {
     @Column(name = "id_eje_transversal")
     private int id_eje_transversal;
 
-    @Column(name = "actividad_pt")
-    private int actividad_pt;
-
     @Column(name = "cierre")
     private String cierre;
 

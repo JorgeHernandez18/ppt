@@ -3,7 +3,6 @@ package com.ppt.ppt.controllers;
 import com.ppt.ppt.dao.TipoEjeTransversalDao;
 import com.ppt.ppt.models.TipoEjeTransversal;
 import com.ppt.ppt.models.Usuario;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;

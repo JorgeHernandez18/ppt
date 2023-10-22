@@ -44,7 +44,6 @@ public class PlanTrabajoDaoImp implements PlanTrabajoDao {
         PlanTrabajo pt = entityManager.find(PlanTrabajo.class, id);
         pt.setAnio(planTrabajo.getAnio());
         pt.setId_eje_transversal(planTrabajo.getId_eje_transversal());
-        pt.setActividad_pt(planTrabajo.getActividad_pt());
         pt.setCierre(planTrabajo.getCierre());
         entityManager.merge(pt);
     }

@@ -7,9 +7,7 @@ import com.ppt.ppt.dao.UsuarioDao;
 import com.ppt.ppt.dto.CrearActividadPA;
 import com.ppt.ppt.models.*;
 import com.ppt.ppt.utils.JWTUtil;
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponseException;
@@ -55,7 +53,7 @@ public class ActividadPAController {
 
     //Funciona, aplicación de excepcion para id no existente
     @RequestMapping(value = "api/actividadpa/{id}", method = RequestMethod.DELETE)
-    public void deleteActividadPA(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @RequestBody ActividadPA actividadPA){
+    public void deleteActividadPA(@RequestHeader(value = "Authorization") String token, @RequestBody ActividadPA actividadPA){
         if (!validaToken(token)){
             new ErrorResponseException(HttpStatusCode.valueOf(401), new Exception("El usuario no es docente lider"));
         }else if(actividadPADao.getActividadPA(actividadPA.getId()) == null) {
@@ -68,7 +66,7 @@ public class ActividadPAController {
 
     //Funciona, aplicación de excepcion para id no existente
     @RequestMapping(value = "api/actividadpa/{id}", method = RequestMethod.PUT)
-    public void updateActividadPA(@RequestHeader(value = "Authorization") String token, HttpServletResponse response, @RequestBody ActividadPA actividadPA, @PathVariable int id){
+    public void updateActividadPA(@RequestHeader(value = "Authorization") String token, @RequestBody ActividadPA actividadPA, @PathVariable int id){
         if(!validaToken(token)){
             new ErrorResponseException(HttpStatusCode.valueOf(401), new Exception("El usuario no es docente lider"));
         }else if(actividadPADao.getActividadPAByIdPA(id) == null) {
