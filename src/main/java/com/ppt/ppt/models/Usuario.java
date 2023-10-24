@@ -42,8 +42,4 @@ public class Usuario {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usuario")
     private Set<UsuarioRol> usuarioRoles = new HashSet<>();
-
-    public Usuario(String correo_electronico, String password){
-        this.correo_electronico = correo_electronico;
-    }
 }
